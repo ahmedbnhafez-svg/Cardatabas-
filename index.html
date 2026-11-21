@@ -4134,38 +4134,90 @@
             XLSX.writeFile(workbook, `Car_Card_Expenses_${carNum}.xlsx`);
         }
 
-        function printUserGuidePDF() {
-            if (!checkGlobalPermission('export')) return;
-            logUserActivity('تصدير', 'الرئيسية', 'طباعة دليل المستخدم PDF');
-            let printWin = window.open('', '_blank');
+        function printUserGuidePDF() { 
+            let printWin = window.open('', '_blank'); 
             let htmlContent = `
-                <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>دليل المستخدم - نظام إدارة السيارات</title>
-                <style>
-                    @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm; }
-                    body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #fff; margin: 0; padding: 0; overflow: hidden; }
-                    h3 { color: #0284c7; margin: 6px 0 3px; font-size: 11px; }
-                    p, li { font-size: 9px; line-height: 1.4; }
-                    .print-footer-box {
-                        position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
-                        background: #ffffff; font-size: 10px; font-weight: bold; font-family: 'Cairo', monospace;
-                        display: flex; justify-content: space-between; align-items: center;
-                        color: #0f172a; padding: 4px 6mm; border-top: 2px solid #0284c7;
-                        -webkit-print-color-adjust: exact;
-                    }
-                    .pageNumber:before { content: counter(page); }
-                    .totalPages:before { content: counter(pages); }
-                </style></head>
-                <body>
-                    ${getPrintHeaderFooterHTML('دليل المستخدم الشامل لنظام إدارة السيارات وكروت المصاريف والتأمين')}
-                    <h3>1. تكويد السيارات المستلمة والتأمين:</h3>
-                    <p>من شاشة <b>الإعدادات</b> يمكن تكويد أرقام السيارات وبياناتها الأساسية وتاريخ انتهاء الرخصة، ثم إضافة وثيقة التأمين للسيارة وتواريخها.</p>
-                    <h3>2. بيانات السيارات وكروت المصاريف:</h3>
-                    <p>في شاشة <b>السيارات المستلمة</b> يتم تسجيل المستلمين، وفي <b>كروت المصاريف</b> يتم إدراج مصاريف الصيانة والوقود وحساب الرصيد التراكمي.</p>
-                    <h3>3. الحركات المالية والتنبيهات والصلاحيات:</h3>
-                    <p>متابعة حركات اليوم والأرشيف، وتنبيهات انتهاء الرخص والتأمين، وإدارة صلاحيات المستخدمين وسجل متابعة الحركات.</p>
-                    <script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
-            printWin.document.write(htmlContent);
-            printWin.document.close();
+                <html lang="ar" dir="rtl"> 
+                <head> 
+                    <meta charset="UTF-8"> 
+                    <title>دليل المستخدم الشامل - نظام إدارة السيارات</title> 
+                    <style> 
+                        @page { size: A4 portrait; margin: 10mm 8mm 14mm 8mm; } 
+                        html, body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #ffffff; margin: 0; padding: 0; width: 100%; height: auto; overflow: hidden; } 
+                        .guide-container { padding: 2px; box-sizing: border-box; } 
+                        h1 { text-align: center; color: #0f172a; font-size: 13px; border-bottom: 2px solid #0284c7; padding-bottom: 3px; margin-bottom: 6px; } 
+                        h2 { color: #0284c7; font-size: 9.5px; margin-top: 4px; margin-bottom: 2px; border-bottom: 1px solid #cbd5e1; padding-bottom: 1px; } 
+                        p, li { font-size: 8px; line-height: 1.3; color: #334155; margin: 1px 0; } 
+                        .section-box { border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 4px; padding: 4px 6px; margin-bottom: 3px; page-break-inside: avoid; } 
+                        .print-footer-box { position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background: #ffffff; font-size: 8px; font-family: 'Cairo', monospace; display: flex; justify-content: space-between; align-items: center; color: #334155; padding: 3px 5mm; box-sizing: border-box; border-top: 1.5px solid #0284c7; z-index: 9999; -webkit-print-color-adjust: exact; } 
+                        .pageNumber:before { content: counter(page); }
+                        .totalPages:before { content: counter(pages); }
+                    </style> 
+                </head> 
+                <body> 
+                    <div class="guide-container"> 
+                        <h1>دليل المستخدم الشامل لنظام إدارة السيارات وكروت المصاريف وتأمين المركبات</h1> 
+                        
+                        <div class="section-box"> 
+                            <h2>1. الشاشة الرئيسية (MAIN)</h2> 
+                            <p><b>الوصف:</b> اللوحة المركزية (Dashboard) للنظام، وتمنح نظرة عامة شاملة وفورية على حالة الأسطول فور تسجيل الدخول.</p> 
+                            <p><b>شريط الإحصائيات (Summary Badges):</b> إجمالي السيارات المكوّدة، السيارات المستخدمة والمستلمة، كروت السيارات، رخص قاربت الانتهاء / منتهية، وتأمين قارب انتهاؤه / وثائق منتهية.</p> 
+                            <p><b>أبرز الإجراءات:</b> زر "فتح بيانات مستلم" للانتقال السريع، وزر "دليل المستخدم" لطباعة التقرير بصيغة PDF.</p> 
+                        </div> 
+
+                        <div class="section-box"> 
+                            <h2>2. شاشة بيانات السيارات المستلمة (CAR DATA)</h2> 
+                            <p><b>الوصف:</b> مخصصة لإدخال وتعديل وتسليم السيارات للموظفين ومواقع العمل وتتبع بيانات الترخيص والتأمين.</p> 
+                            <p><b>طريقة العمل:</b> اختيار رقم السيارة من القائمة المنسدلة (يجلب النوع والموديل وتاريخ انتهاء الرخصة والتأمين تلقائياً)، إدخال بيانات المستلم، التليفون، مكان العمل، تاريخ الاستلام، RG، كارت البنزين والملاحظات.</p> 
+                            <p><b>أزرار التحكم:</b> ADD (إنشاء حركة مستلم جديد بقيمة 0)، EDIT، (يحدث بيانات) DELETE (يسجل "ايقاف واستلام" في الكارت ثم يحذف مع الاحتفاظ بالحركات المالية في الأرشيف)، تفريغ، وتصدير إكسل.</p> 
+                        </div> 
+
+                        <div class="section-box"> 
+                            <h2>3. شاشة كروت السيارات ومصاريف الصيانة (CARD DA)</h2> 
+                            <p><b>الوصف:</b> لتدوين ومتابعة مصاريف التشغيل والصيانة وقطع الغيار والوقود لكل سيارة.</p> 
+                            <p><b>طريقة العمل:</b> اختيار رقم السيارة (لعرض بياناتها وتاريخ انتهاء الرخصة)، تحديد تاريخ الحركة، وصف البيان، وإدخال المبلغ (> 0) مع احتساب الإجمالي التراكمي تلقائياً.</p> 
+                            <p><b>أزرار التحكم:</b> ADD CARD ENTRY، DEL CARD، SAVE PDF / EXCEL CARD، وحذف بند محدد مع بقائه محفوظاً في الأرشيف الدائم.</p> 
+                        </div> 
+
+                        <div class="section-box"> 
+                            <h2>4. شاشة تأمين السيارات (Car Insurance)</h2> 
+                            <p><b>الوصف:</b> إدارة وثائق التأمين الشامل أو الضد لجميع مركبات الأسطول ومتابعة سريانها وتاريخ انتهاء الرخصة التلقائي من التكويد.</p> 
+                            <p><b>طريقة العمل:</b> تعديل/إضافة وثيقة تأمين (تاريخ انتهاء الرخصة التلقائي، اسم شركة التأمين وتواريخ البداية والنهاية)، عرض جدول وثائق التأمين المعتمدة، وسجل السيارات التي ليس لها تأمين مع زر إضافة تأمين الآن.</p> 
+                        </div> 
+
+                        <div class="section-box"> 
+                            <h2>5. شاشة الحركات المالية (FINANCIAL)</h2> 
+                            <p><b>الوصف:</b> المتابعة والتدقيق المالي وتتضمن جدولين: حركات اليوم (> 0) مع مؤشرات سريعة، وسجل الحركات المالية السابقة (الأرشيف المستقل الدائم غير القابل للتأثر بعمليات الحذف أو التعديل، مع شريط فلترة بالتواريخ للطباعة والتصدير).</p> 
+                        </div> 
+
+                        <div class="section-box"> 
+                            <h2>6. شاشة التقارير المتقدمة (REPORTS)</h2> 
+                            <p><b>الوصف:</b> المحرك التحليلي للنظام لاستخراج كشوفات مخصصة بفلترة متعددة الشروط (النوع، الموديل، موقع العمل، Rg-الملكية، شركة التأمين، ونطاقات تواريخ الاستلام وانتهاء الرخص والتأمين) مع طباعة PDF وتصدير إكسل منسقين.</p> 
+                        </div> 
+
+                        <div class="section-box"> 
+                            <h2>7 & 8. تنبيهات الرخص والتأمين (License Expir & Insurance Expi)</h2> 
+                            <p><b>الوصف:</b> شاشتا المتابعة الوقائية للرخص ووثائق التأمين المنتهية (باللون الأحمر) والقريبة من الانتهاء (باللون الأصفر) وفقاً للأيام المحددة في الإعدادات، مع خاصية التحديث المباشر للتاريخ واستخراج تقارير PDF منفصلة.</p> 
+                        </div> 
+
+                        <div class="section-box"> 
+                            <h2>9. شاشة الإعدادات والتحكم (SETTINGS) وأمان الجلسات</h2> 
+                            <p><b>أ. تكويد السيارات (Coded Cars):</b> القائمة المرجعية الأساسية لجميع أرقام وأنواع وموديلات وتواريخ انتهاء رخص السيارات.</p> 
+                            <p><b>ب. المستخدمين والصلاحيات (Users Management):</b> إنشاء الحسابات، وتحديد الصلاحيات التفصيلية للشاشات وأزرار العمليات (Add, Edit, Del, Export).</p> 
+                            <p><b>ج. تنبيهات النظام (System Alerts Config):</b> ضبط أيام التنبيه المبكر (10 إلى 60 يوماً).</p> 
+                        <p><b>د. سجل متابعة حركات المستخدمين (User Activity):</b> مراقبة كافة العمليات التي يقوم بها المستخدمون مع بيان التفاصيل والفلترة بالتاريخ واسم المستخدم.</p>
+                            <p><b>🔒 أمان الجلسات:</b> قفل المحاولات الخاطئة (حظر 10 دقائق بعد 3 محاولات) والإغلاق التلقائي لعدم النشاط (Idle Timeout بعد 20 دقيقة).</p> 
+                        </div> 
+                    </div> 
+                    ${getPrintHeaderFooterHTML('دليل المستخدم الشامل للنظام')}
+                    <script> 
+                        window.onload = function() { window.print(); window.close(); } 
+                    <\/script> 
+                </body> 
+                </html> 
+            `; 
+            printWin.document.write(htmlContent); 
+            printWin.document.close(); 
         }
 
         function getExpenses() { return expensesCache || []; }
