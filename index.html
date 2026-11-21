@@ -34,18 +34,18 @@
         @media print {
             .no-print { display: none !important; }
             .print-only { display: block !important; }
-            @page { size: A4 landscape; margin: 6mm 5mm 14mm 5mm !important; }
+            @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm !important; }
             html, body { background: #ffffff !important; color: #0f172a !important; width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; box-sizing: border-box !important; overflow: hidden !important; }
             main { padding: 0 !important; margin: 0 !important; overflow: visible !important; }
             .tab-view { display: block !important; }
             .tab-view.hidden { display: none !important; }
             table { width: 100% !important; border-collapse: collapse !important; table-layout: fixed !important; page-break-inside: avoid !important; margin-bottom: 0 !important; }
             tr { page-break-inside: avoid !important; page-break-after: auto !important; }
-            td, th { padding: 2.5px 3px !important; font-size: 8px !important; line-height: 1.1 !important; word-wrap: break-word !important; overflow: hidden !important; border: 1px solid #94a3b8 !important; }
+            td, th { padding: 3.5px 4px !important; font-size: 9.5px !important; line-height: 1.25 !important; word-wrap: break-word !important; overflow: hidden !important; border: 1px solid #94a3b8 !important; }
             thead { display: table-header-group !important; }
             th { background-color: #0284c7 !important; color: #ffffff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold !important; }
             .print-footer-box {
-                position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important; width: 100% !important; background: #ffffff !important; font-size: 8px !important; font-family: 'Cairo', monospace !important; display: flex !important; justify-content: space-between !important; align-items: center !important; color: #334155 !important; padding: 3px 5mm !important; box-sizing: border-box !important; border-top: 1.5px solid #0284c7 !important; z-index: 9999 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+                position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important; width: 100% !important; background: #ffffff !important; font-size: 10px !important; font-weight: bold !important; font-family: 'Cairo', monospace !important; display: flex !important; justify-content: space-between !important; align-items: center !important; color: #0f172a !important; padding: 4px 6mm !important; box-sizing: border-box !important; border-top: 2px solid #0284c7 !important; z-index: 9999 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
             }
         }
     </style>
@@ -276,7 +276,7 @@
                             <span class="px-3 py-1 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded-full text-xs font-semibold">نظام إدارة السيارات والتأمين</span>
                             <h2 class="text-3xl md:text-4xl font-extrabold text-white leading-tight">أهلاً بك في منصة متابعة بيانات السيارات وكروت المصاريف والرخص ووثائق التأمين</h2>
                             <p class="text-slate-300 text-sm leading-relaxed">
-                                يمكنك من خلال هذا النظام إدارة جميع بيانات المركبات، متابعة تواريخ انتهاء الترخيص ووثائق التأمين، إضافة كروت المصروفات، متابعة الحركات المالية، واستخرج تقارير طباعة PDF وتصدير البيانات لملفات إكسل بسهولة.
+                                يمكنك من خلال هذا النظام إدارة جميع بيانات المركبات، متابعة تواريخ انتهاء الترخيص ووثائق التأمين، إضافة كروت المصروفات، متابعة الحركات المالية، واستخراج تقارير طباعة PDF وتصدير البيانات لملفات إكسل بسهولة.
                             </p>
                             <div class="flex flex-wrap gap-3 pt-2">
                                 <button onclick="switchTab('carData')" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-xl shadow-lg transition text-xs">
@@ -1172,6 +1172,7 @@
                                         <label class="flex items-center gap-2 text-xs text-emerald-300 cursor-pointer font-bold"><input type="checkbox" id="perm_usersSettings" class="rounded bg-slate-800 border-slate-700 text-emerald-600"> إعدادات المستخدمين</label>
                                         <label class="flex items-center gap-2 text-xs text-sky-300 cursor-pointer font-bold col-span-2"><input type="checkbox" id="perm_codedCars" class="rounded bg-slate-800 border-slate-700 text-sky-600"> شاشة تكويد السيارات</label>
                                         <label class="flex items-center gap-2 text-xs text-amber-300 cursor-pointer font-bold col-span-2"><input type="checkbox" id="perm_systemAlerts" class="rounded bg-slate-800 border-slate-700 text-amber-600"> إعدادات تنبيهات النظام</label>
+                                        <label class="flex items-center gap-2 text-xs text-cyan-300 cursor-pointer font-bold col-span-2"><input type="checkbox" id="perm_auditLog" class="rounded bg-slate-800 border-slate-700 text-cyan-600"> متابعة حركات المستخدمين</label>
                                     </div>
                                 </div>
                                 
@@ -1201,6 +1202,68 @@
                                     </tr>
                                 </thead>
                                 <tbody id="systemUsersTableBody" class="divide-y divide-slate-700/60 text-slate-200">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- User Activity Audit Log Section -->
+                    <div id="userAuditLogSectionWrapper" class="bg-slate-800 border border-cyan-500/40 rounded-2xl p-5 shadow-xl">
+                        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700">
+                            <div>
+                                <h2 class="text-xl font-bold text-cyan-400 flex items-center gap-2">
+                                    <i class="fa-solid fa-clipboard-user"></i> سجل متابعة حركات المستخدمين (إدخال - تعديل - حذف - تصدير)
+                                </h2>
+                                <p class="text-xs text-slate-400">مراقبة كافة العمليات التي يقوم بها المستخدمون مع بيان التفاصيل والفلترة بالتاريخ واسم المستخدم</p>
+                            </div>
+                            <div class="no-print flex gap-2">
+                                <button onclick="printAuditLogPDF()" class="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white font-bold rounded-lg text-xs shadow transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-file-pdf"></i> طباعة السجل PDF
+                                </button>
+                                <button onclick="exportAuditLogExcel()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-lg text-xs shadow transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-file-excel"></i> تصدير إكسل
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-slate-900 border border-slate-700 rounded-xl mb-6 items-end">
+                            <div>
+                                <label class="block text-xs font-semibold text-cyan-300 mb-1">اسم المستخدم</label>
+                                <select id="auditUserFilter" onchange="renderAuditLogTable()" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-white focus:border-cyan-500">
+                                    <option value="الكل">الكل</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-cyan-300 mb-1">من تاريخ</label>
+                                <input type="date" id="auditDateFrom" onchange="renderAuditLogTable()" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-white focus:border-cyan-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-cyan-300 mb-1">إلى تاريخ</label>
+                                <input type="date" id="auditDateTo" onchange="renderAuditLogTable()" class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-white focus:border-cyan-500">
+                            </div>
+                            <div>
+                                <button onclick="resetAuditLogFilters()" class="w-full py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-bold rounded-lg transition">
+                                    إعادة ضبط الفلترة
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-right text-xs">
+                                <thead class="bg-slate-950 text-slate-300 border-b border-slate-700 font-bold">
+                                    <tr>
+                                        <th class="p-3">#</th>
+                                        <th class="p-3 text-cyan-300">التاريخ والوقت</th>
+                                        <th class="p-3 text-sky-300">اسم المستخدم</th>
+                                        <th class="p-3 text-amber-300">نوع الحركة</th>
+                                        <th class="p-3">الشاشة</th>
+                                        <th class="p-3">بيان التفاصيل</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditLogTableBody" class="divide-y divide-slate-700/60 text-slate-200">
+                                    <tr>
+                                        <td colspan="6" class="text-center py-6 text-slate-400">لا توجد حركات مسجلة للمستخدمين حالياً</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -1260,8 +1323,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, set, get, child, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+   const firebaseConfig = {
   apiKey: "AIzaSyCsMEP2sZFiIj5uraY5Bx4rbxgKKg27mxE",
   authDomain: "abomazencars.firebaseapp.com",
   databaseURL: "https://abomazencars-default-rtdb.firebaseio.com",
@@ -1295,6 +1357,7 @@ const firebaseConfig = {
         let codedCarsCache = [];
         let insuranceCache = [];
         let usersCache = [];
+        let auditLogCache = [];
         let systemAlertsConfig = { licenseDays: 30, insuranceDays: 30 };
         let currentUser = null;
         let isUsersOnlyMode = false;
@@ -1304,7 +1367,7 @@ const firebaseConfig = {
                 user: 'Ahmed', 
                 pass: '1980', 
                 role: 'مدير',
-                perms: { carData: true, cardDa: true, carInsurance: true, financial: true, reports: true, licenseExp: true, insuranceExp: true, usersSettings: true, codedCars: true, systemAlerts: true, globalAdd: true, globalEdit: true, globalDel: true, globalExport: true }
+                perms: { carData: true, cardDa: true, carInsurance: true, financial: true, reports: true, licenseExp: true, insuranceExp: true, usersSettings: true, codedCars: true, systemAlerts: true, auditLog: true, globalAdd: true, globalEdit: true, globalDel: true, globalExport: true }
             }
         ];
 
@@ -1460,6 +1523,13 @@ const firebaseConfig = {
                     }
                 }
                 renderSystemUsersTable();
+                populateAuditUserFilter();
+            });
+
+            window.cloudOnValue(window.cloudRef(window.cloudDb, 'userAuditLog'), (snapshot) => {
+                auditLogCache = snapshot.exists() ? snapshot.val() || [] : [];
+                populateAuditUserFilter();
+                renderAuditLogTable();
             });
 
             window.cloudOnValue(window.cloudRef(window.cloudDb, 'systemAlertsConfig'), (snapshot) => {
@@ -1481,6 +1551,186 @@ const firebaseConfig = {
                 renderInsuranceExpiryAlerts();
                 updateDashboardStats();
             });
+        }
+
+        // تسجيل حركة المستخدم في سجل المتابعة
+        function logUserActivity(actionType, screenName, details) {
+            const now = new Date();
+            const dateStr = now.toISOString().split('T')[0];
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            const actor = currentUser ? currentUser.user : (document.getElementById('loginUser')?.value?.trim() || 'غير معروف');
+
+            const entry = {
+                id: Date.now() + Math.floor(Math.random() * 1000),
+                date: dateStr,
+                time: timeStr,
+                dateTime: `${dateStr} | ${timeStr}`,
+                user: actor,
+                action: actionType, // إدخال بيانات / تعديل / حذف / تصدير
+                screen: screenName,
+                details: details
+            };
+
+            auditLogCache = [entry, ...(auditLogCache || [])];
+            if (window.cloudDb) {
+                window.cloudSet(window.cloudRef(window.cloudDb, 'userAuditLog'), auditLogCache);
+            } else {
+                populateAuditUserFilter();
+                renderAuditLogTable();
+            }
+        }
+
+        function populateAuditUserFilter() {
+            const select = document.getElementById('auditUserFilter');
+            if (!select) return;
+            const currentVal = select.value;
+            const usersFromLogs = (auditLogCache || []).map(x => x.user).filter(Boolean);
+            const usersFromSystem = (usersCache || []).map(x => x.user).filter(Boolean);
+            const allUsers = [...new Set([...usersFromSystem, ...usersFromLogs])];
+
+            select.innerHTML = '<option value="الكل">الكل</option>';
+            allUsers.forEach(u => {
+                const opt = document.createElement('option');
+                opt.value = u;
+                opt.innerText = u;
+                select.appendChild(opt);
+            });
+            if (currentVal && [...select.options].some(o => o.value === currentVal)) {
+                select.value = currentVal;
+            }
+        }
+
+        function getFilteredAuditLogs() {
+            const userFilter = document.getElementById('auditUserFilter')?.value || 'الكل';
+            const dateFrom = document.getElementById('auditDateFrom')?.value || '';
+            const dateTo = document.getElementById('auditDateTo')?.value || '';
+
+            return (auditLogCache || []).filter(item => {
+                if (userFilter !== 'الكل' && item.user !== userFilter) return false;
+                if (dateFrom && item.date && item.date < dateFrom) return false;
+                if (dateTo && item.date && item.date > dateTo) return false;
+                return true;
+            });
+        }
+
+        function resetAuditLogFilters() {
+            if (document.getElementById('auditUserFilter')) document.getElementById('auditUserFilter').value = 'الكل';
+            if (document.getElementById('auditDateFrom')) document.getElementById('auditDateFrom').value = '';
+            if (document.getElementById('auditDateTo')) document.getElementById('auditDateTo').value = '';
+            renderAuditLogTable();
+        }
+
+        function renderAuditLogTable() {
+            const tbody = document.getElementById('auditLogTableBody');
+            if (!tbody) return;
+            const list = getFilteredAuditLogs();
+            tbody.innerHTML = '';
+
+            if (list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-6 text-slate-400">لا توجد حركات مطابقة للفلترة المحددة</td></tr>';
+                return;
+            }
+
+            list.forEach((item, idx) => {
+                let badgeClass = 'bg-slate-700 text-slate-200';
+                if (item.action && item.action.includes('إدخال')) badgeClass = 'bg-emerald-600/30 text-emerald-300 border border-emerald-500/40';
+                else if (item.action && item.action.includes('تعديل')) badgeClass = 'bg-sky-600/30 text-sky-300 border border-sky-500/40';
+                else if (item.action && item.action.includes('حذف')) badgeClass = 'bg-red-600/30 text-red-300 border border-red-500/40';
+                else if (item.action && item.action.includes('تصدير')) badgeClass = 'bg-amber-600/30 text-amber-300 border border-amber-500/40';
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-700/40">
+                        <td class="p-3 font-mono text-cyan-400 font-bold">${idx + 1}</td>
+                        <td class="p-3 font-mono text-cyan-300">${item.dateTime || item.date || '-'}</td>
+                        <td class="p-3 font-bold text-white">${item.user || '-'}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[11px] font-bold ${badgeClass}">${item.action || '-'}</span></td>
+                        <td class="p-3 text-slate-300">${item.screen || '-'}</td>
+                        <td class="p-3 text-slate-200">${item.details || '-'}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function printAuditLogPDF() {
+            if (!checkGlobalPermission('export')) return;
+            const list = getFilteredAuditLogs();
+            if (list.length === 0) {
+                customAlert('تنبيه', 'لا توجد حركات مطابقة للطباعة!', 'warning');
+                return;
+            }
+            logUserActivity('تصدير', 'متابعة حركات المستخدمين', `طباعة PDF لسجل حركات المستخدمين (عدد السجلات: ${list.length})`);
+
+            const userFilter = document.getElementById('auditUserFilter')?.value || 'الكل';
+            const dateFrom = document.getElementById('auditDateFrom')?.value || 'البداية';
+            const dateTo = document.getElementById('auditDateTo')?.value || 'النهاية';
+
+            let printWin = window.open('', '_blank');
+            let htmlContent = `
+                <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>سجل متابعة حركات المستخدمين</title>
+                <style>
+                    @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm; }
+                    body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #fff; margin: 0; padding: 0; overflow: hidden; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 9.5px; table-layout: fixed; }
+                    th, td { border: 1px solid #cbd5e1; padding: 3.5px 4px; text-align: right; word-wrap: break-word; line-height: 1.25; }
+                    th { background-color: #0891b2 !important; color: #fff !important; -webkit-print-color-adjust: exact; }
+                    .print-footer-box {
+                        position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
+                        background: #ffffff; font-size: 10px; font-weight: bold; font-family: 'Cairo', monospace;
+                        display: flex; justify-content: space-between; align-items: center;
+                        color: #0f172a; padding: 4px 6mm; border-top: 2px solid #0284c7;
+                        -webkit-print-color-adjust: exact;
+                    }
+                    .pageNumber:before { content: counter(page); }
+                    .totalPages:before { content: counter(pages); }
+                </style></head>
+                <body>
+                    ${getPrintHeaderFooterHTML(`سجل متابعة حركات المستخدمين (المستخدم: ${userFilter} | من: ${dateFrom} إلى: ${dateTo})`)}
+                    <table>
+                        <thead><tr><th style="width: 4%;">#</th><th style="width: 17%;">التاريخ والوقت</th><th style="width: 14%;">اسم المستخدم</th><th style="width: 13%;">نوع الحركة</th><th style="width: 16%;">الشاشة</th><th style="width: 36%;">بيان التفاصيل</th></tr></thead>
+                        <tbody>
+            `;
+            list.forEach((item, idx) => {
+                htmlContent += `<tr><td>${idx + 1}</td><td>${item.dateTime || item.date || '-'}</td><td><b>${item.user || '-'}</b></td><td>${item.action || '-'}</td><td>${item.screen || '-'}</td><td>${item.details || '-'}</td></tr>`;
+            });
+            htmlContent += `
+                        <tr style="background:#f1f5f9;font-weight:bold;">
+                            <td colspan="4">إجمالي عدد الحركات</td>
+                            <td colspan="2">${list.length} حركة</td>
+                        </tr>
+                    </tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
+            printWin.document.write(htmlContent);
+            printWin.document.close();
+        }
+
+        function exportAuditLogExcel() {
+            if (!checkGlobalPermission('export')) return;
+            const list = getFilteredAuditLogs();
+            if (list.length === 0) {
+                customAlert('تنبيه', 'لا توجد حركات مطابقة للتصدير!', 'warning');
+                return;
+            }
+            logUserActivity('تصدير', 'متابعة حركات المستخدمين', `تصدير Excel لسجل حركات المستخدمين (عدد السجلات: ${list.length})`);
+
+            const dataToExport = list.map((item, idx) => ({
+                "م": idx + 1,
+                "التاريخ والوقت": item.dateTime || item.date || '',
+                "اسم المستخدم": item.user || '',
+                "نوع الحركة": item.action || '',
+                "الشاشة": item.screen || '',
+                "بيان التفاصيل": item.details || ''
+            }));
+            dataToExport.push({
+                "م": "الإجمالي",
+                "التاريخ والوقت": "",
+                "اسم المستخدم": "",
+                "نوع الحركة": "إجمالي عدد الحركات",
+                "الشاشة": list.length,
+                "بيان التفاصيل": ""
+            });
+            const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "حركات المستخدمين");
+            XLSX.writeFile(workbook, "Users_Activity_Audit_Log.xlsx");
         }
 
         window.onload = function() {
@@ -1508,6 +1758,8 @@ const firebaseConfig = {
                 showModal('loginModal');
             }
             onSysUserRoleChange();
+            populateAuditUserFilter();
+            renderAuditLogTable();
         };
 
         function refreshUI() {
@@ -1526,6 +1778,8 @@ const firebaseConfig = {
             renderInsuranceTable();
             populateInsuranceCompanyFilter();
             renderSystemUsersTable();
+            populateAuditUserFilter();
+            renderAuditLogTable();
             updateSettingsViewPermissions();
         }
 
@@ -1621,7 +1875,7 @@ const firebaseConfig = {
             if (tabKey !== 'main' && currentUser && currentUser.role !== 'مدير') {
                 const perms = currentUser.perms || {};
                 if (tabKey === 'settings') {
-                    if (!perms.usersSettings && !perms.codedCars && !perms.systemAlerts) {
+                    if (!perms.usersSettings && !perms.codedCars && !perms.systemAlerts && !perms.auditLog) {
                         customAlert('عذراً غير مسموح !', 'ليس لديك صلاحية فتح صفحة الإعدادات!', 'error');
                         return;
                     }
@@ -1650,18 +1904,22 @@ const firebaseConfig = {
             }
             if (tabKey === 'settings') {
                 updateSettingsViewPermissions();
+                populateAuditUserFilter();
+                renderAuditLogTable();
             }
         }
 
         function updateSettingsViewPermissions() {
             const codedSec = document.getElementById('codedCarsSectionWrapper');
             const usersSec = document.getElementById('usersMgmtSectionWrapper');
+            const auditSec = document.getElementById('userAuditLogSectionWrapper');
             const alertsSec = document.getElementById('systemAlertsSectionWrapper');
             if (!codedSec || !usersSec || !alertsSec) return;
 
             if (!currentUser || currentUser.role === 'مدير' || isUsersOnlyMode) {
                 codedSec.style.display = 'block';
                 usersSec.style.display = 'block';
+                if (auditSec) auditSec.style.display = 'block';
                 alertsSec.style.display = 'block';
                 return;
             }
@@ -1669,6 +1927,7 @@ const firebaseConfig = {
             const perms = currentUser.perms || {};
             codedSec.style.display = perms.codedCars ? 'block' : 'none';
             usersSec.style.display = perms.usersSettings ? 'block' : 'none';
+            if (auditSec) auditSec.style.display = perms.auditLog ? 'block' : 'none';
             alertsSec.style.display = perms.systemAlerts ? 'block' : 'none';
         }
 
@@ -1685,6 +1944,8 @@ const firebaseConfig = {
             const insDaysDisp = document.getElementById('settingInsuranceDaysDisplayHeader');
             if (insDaysDisp) insDaysDisp.innerText = insuranceDays;
 
+            logUserActivity('تعديل', 'إعدادات تنبيهات النظام', `تحديث أيام التنبيه: الرخص (${licenseDays} يوم)، التأمين (${insuranceDays} يوم)`);
+
             if (window.cloudDb) {
                 window.cloudSet(window.cloudRef(window.cloudDb, 'systemAlertsConfig'), systemAlertsConfig).then(() => {
                     renderLicenseAlerts();
@@ -1696,7 +1957,7 @@ const firebaseConfig = {
                 renderLicenseAlerts();
                 renderInsuranceExpiryAlerts();
                 updateDashboardStats();
-                customAlert('نجاح', 'تم حفظ إعدادات تنبيهات النظام بنجاح!', 'success');
+                customAlert('نجاح', 'تم حفظ وتحديث إعدادات تنبيهات النظام بنجاح!', 'success');
             }
         }
 
@@ -1730,6 +1991,7 @@ const firebaseConfig = {
                 closeModal('loginModal');
                 updateSettingsViewPermissions();
                 resetIdleTimer();
+                logUserActivity('إدخال بيانات', 'تسجيل الدخول', `تسجيل دخول ناجح للمستخدم: ${currentUser.user}`);
                 customAlert('نجاح !', `أهلاً بك يا ${currentUser.user} تم تسجيل الدخول بنجاح !!`, 'success');
             } else {
                 attempts++;
@@ -1800,6 +2062,7 @@ const firebaseConfig = {
             document.getElementById('mainStatsHeader').style.display = 'none';
             document.getElementById('codedCarsSectionWrapper').style.display = 'none';
             document.getElementById('usersMgmtSectionWrapper').style.display = 'block';
+            if (document.getElementById('userAuditLogSectionWrapper')) document.getElementById('userAuditLogSectionWrapper').style.display = 'block';
             document.getElementById('systemAlertsSectionWrapper').style.display = 'block';
             document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
             document.getElementById('view-settings').classList.remove('hidden');
@@ -1839,7 +2102,6 @@ const firebaseConfig = {
             }
         }
 
-        // جلب تاريخ التكويد / الرخصة المعتمد مباشرة من جدول شاشة التكويد أولاً
         function getCodingDateForCar(carNum) {
             const codedObj = (codedCarsCache || []).find(c => c.num === carNum && c.expiryDate);
             if (codedObj && codedObj.expiryDate) return codedObj.expiryDate;
@@ -1878,7 +2140,6 @@ const firebaseConfig = {
             if (idx !== '' && list[idx]) {
                 list[idx] = { num, type, model, expiryDate };
 
-                // مزامنة التاريخ التلقائي في شاشة التأمين
                 let insList = getInsuranceList();
                 const insIdx = insList.findIndex(i => i.num === num);
                 if (insIdx !== -1) {
@@ -1889,7 +2150,6 @@ const firebaseConfig = {
                     }
                 }
 
-                // مزامنة التاريخ التلقائي في شاشة السيارات المستلمة
                 let carsList = getCars();
                 const carIdx = carsList.findIndex(c => c.num === num);
                 if (carIdx !== -1) {
@@ -1900,6 +2160,7 @@ const firebaseConfig = {
                     }
                 }
 
+                logUserActivity('تعديل', 'تكويد السيارات', `تعديل سيارة مكوّدة رقم: ${num} (${type} - ${model})، انتهاء الرخصة: ${expiryDate}`);
                 saveCodedCarsList(list);
                 clearCodedCarForm();
                 if (document.getElementById('carNum').value === num) {
@@ -1915,6 +2176,7 @@ const firebaseConfig = {
                     return;
                 }
                 list.push({ num, type, model, expiryDate });
+                logUserActivity('إدخال بيانات', 'تكويد السيارات', `إضافة سيارة مكوّدة جديدة رقم: ${num} (${type} - ${model})، انتهاء الرخصة: ${expiryDate}`);
                 saveCodedCarsList(list);
                 clearCodedCarForm();
 
@@ -2028,6 +2290,8 @@ const firebaseConfig = {
                 codedCarsCache = codedList;
                 carsCache = carsList;
                 insuranceCache = insList;
+
+                logUserActivity('حذف', 'تكويد السيارات', `حذف السيارة المكوّدة رقم: ${carNum}`);
 
                 if (window.cloudDb) {
                     Promise.all([
@@ -2237,11 +2501,14 @@ const firebaseConfig = {
             let list = getInsuranceList();
             if (list[idx]) {
                 const carNum = list[idx].num;
+                const hadCompany = !!(list[idx].company && list[idx].company.trim());
                 const codingDate = getCodingDateForCar(carNum) || document.getElementById('insCarExpiryDate').value || '';
                 list[idx].licenseExpiryDate = codingDate;
                 list[idx].company = company;
                 list[idx].startDate = startDate;
                 list[idx].endDate = endDate;
+
+                logUserActivity(hadCompany ? 'تعديل' : 'إدخال بيانات', 'تأمين السيارات', `${hadCompany ? 'تعديل' : 'إضافة'} وثيقة تأمين للسيارة ${carNum} - شركة: ${company} (من ${startDate} إلى ${endDate})`);
 
                 saveInsuranceList(list);
                 clearInsuranceForm();
@@ -2262,7 +2529,7 @@ const firebaseConfig = {
 
             return `
                 <div style="text-align: center; margin-bottom: 8px; border-bottom: 2px solid #0284c7; padding-bottom: 4px;">
-                    <h2 style="margin: 0; color: #0f172a; font-size: 14px; font-weight: bold;">${titleText}</h2>
+                    <h2 style="margin: 0; color: #0f172a; font-size: 15px; font-weight: bold;">${titleText}</h2>
                 </div>
                 <div class="print-footer-box">
                     <span>طبعت بواسطة : ${userName}</span>
@@ -2279,6 +2546,7 @@ const firebaseConfig = {
                 customAlert('تنبيه', 'لا توجد بيانات تأمين للطباعة!', 'warning');
                 return;
             }
+            logUserActivity('تصدير', 'تأمين السيارات', `طباعة PDF لتقرير وثائق تأمين السيارات (العدد: ${list.length})`);
             const codedList = getCodedCars();
             let printWin = window.open('', '_blank');
             let htmlContent = `
@@ -2287,16 +2555,16 @@ const firebaseConfig = {
                     <meta charset="UTF-8">
                     <title>تقرير وثائق تأمين السيارات</title>
                     <style>
-                        @page { size: A4 landscape; margin: 6mm 5mm 14mm 5mm; }
+                        @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm; }
                         body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #fff; margin: 0; padding: 0; overflow: hidden; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 8.5px; table-layout: fixed; }
-                        th, td { border: 1px solid #cbd5e1; padding: 3px; text-align: right; word-wrap: break-word; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 9.5px; table-layout: fixed; }
+                        th, td { border: 1px solid #cbd5e1; padding: 3.5px 4px; text-align: right; word-wrap: break-word; line-height: 1.25; }
                         th { background-color: #4f46e5 !important; color: #fff !important; -webkit-print-color-adjust: exact; }
                         .print-footer-box {
                             position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
-                            background: #ffffff; font-size: 8px; font-family: 'Cairo', monospace;
+                            background: #ffffff; font-size: 10px; font-weight: bold; font-family: 'Cairo', monospace;
                             display: flex; justify-content: space-between; align-items: center;
-                            color: #334155; padding: 3px 5mm; border-top: 1.5px solid #0284c7;
+                            color: #0f172a; padding: 4px 6mm; border-top: 2px solid #0284c7;
                             -webkit-print-color-adjust: exact;
                         }
                         .pageNumber:before { content: counter(page); }
@@ -2337,6 +2605,10 @@ const firebaseConfig = {
                 `;
             });
             htmlContent += `
+                            <tr style="background:#eef2ff;font-weight:bold;">
+                                <td colspan="5">إجمالي عدد وثائق التأمين</td>
+                                <td colspan="3">${list.length} وثيقة</td>
+                            </tr>
                         </tbody>
                     </table>
                     <script>window.onload = function() { window.print(); window.close(); }<\/script>
@@ -2351,6 +2623,7 @@ const firebaseConfig = {
             if (!checkGlobalPermission('export')) return;
             const list = getInsuranceList().filter(i => i.company && i.company.trim() !== '');
             if (list.length === 0) return;
+            logUserActivity('تصدير', 'تأمين السيارات', `تصدير Excel لبيانات تأمين السيارات (العدد: ${list.length})`);
             const codedList = getCodedCars();
             const dataToExport = list.map((item, idx) => {
                 const codedObj = codedList.find(c => c.num === item.num) || {};
@@ -2365,6 +2638,16 @@ const firebaseConfig = {
                     "تاريخ البداية": item.startDate || '',
                     "تاريخ النهاية": item.endDate || ''
                 };
+            });
+            dataToExport.push({
+                "م": "الإجمالي",
+                "رقم السيارة": "",
+                "نوع السيارة": "",
+                "الموديل": "",
+                "تاريخ انتهاء الرخصة": "",
+                "شركة التأمين": "إجمالي العدد",
+                "تاريخ البداية": list.length,
+                "تاريخ النهاية": ""
             });
             const worksheet = XLSX.utils.json_to_sheet(dataToExport);
             const workbook = XLSX.utils.book_new();
@@ -2465,6 +2748,7 @@ const firebaseConfig = {
                 };
                 expenses.push(newExpItem);
                 saveExpensesWithoutRefresh(expenses);
+                logUserActivity('إدخال بيانات', 'السيارات المستلمة', `تسليم سيارة رقم: ${num} للمستلم: ${name} (${workplace})`);
 
                 clearCarForm();
                 populateVehicleDropdown();
@@ -2494,6 +2778,7 @@ const firebaseConfig = {
                 };
                 expenses.push(editExpItem);
                 saveExpensesWithoutRefresh(expenses);
+                logUserActivity('تعديل', 'السيارات المستلمة', `تعديل بيانات سيارة رقم: ${num} - المستلم: ${name} (${workplace})`);
 
                 clearCarForm();
                 populateVehicleDropdown();
@@ -2508,7 +2793,6 @@ const firebaseConfig = {
             }
         }
 
-        // عند الحذف في شاشة السيارات المستلمة: إضافة البيانات في كارت السيارة بالبيان (ايقاف واستلام) ثم الحذف
         function confirmDeleteCar() {
             if (!checkGlobalPermission('del')) return;
             const num = document.getElementById('carNum').value.trim();
@@ -2540,6 +2824,7 @@ const firebaseConfig = {
 
                 expensesCache = updatedExpenses;
                 carsCache = updatedCars;
+                logUserActivity('حذف', 'السيارات المستلمة', `إيقاف واستلام وحذف ملف السيارة رقم: ${num} (المستلم: ${targetCar.name || '-'})`);
 
                 if (window.cloudDb) {
                     Promise.all([
@@ -2629,7 +2914,6 @@ const firebaseConfig = {
             }
         }
 
-        // جلب حالة التاريخ مباشرة من جدول شاشة التكويد (codedCarsCache)
         function renderLicenseAlerts() {
             const codedCars = getCodedCars();
             const cars = getCars();
@@ -2737,6 +3021,8 @@ const firebaseConfig = {
             codedCarsCache = codedList;
             insuranceCache = insList;
 
+            logUserActivity('تعديل', 'حالة رخص السيارات', `تحديث تاريخ انتهاء رخصة السيارة رقم: ${carNum} إلى: ${updatedDate}`);
+
             if (window.cloudDb) {
                 Promise.all([
                     window.cloudSet(window.cloudRef(window.cloudDb, 'cars'), cars),
@@ -2842,6 +3128,7 @@ const firebaseConfig = {
             const idx = list.findIndex(i => i.num === carNum);
             if (idx !== -1) {
                 list[idx].endDate = newDateInput.value;
+                logUserActivity('تعديل', 'انتهاء وثائق التأمين', `تحديث تاريخ انتهاء تأمين السيارة رقم: ${carNum} إلى: ${newDateInput.value}`);
                 saveInsuranceList(list);
                 renderCarTable();
                 customAlert('نجاح', 'تم تحديث تاريخ انتهاء وثيقة التأمين بنجاح!', 'success');
@@ -2893,13 +3180,16 @@ const firebaseConfig = {
         function saveSystemUsersList(list) {
             usersCache = list;
             if (window.cloudDb) {
-                window.cloudSet(window.cloudRef(window.cloudDb, 'systemUsers'), list).then(() => renderSystemUsersTable());
+                window.cloudSet(window.cloudRef(window.cloudDb, 'systemUsers'), list).then(() => {
+                    renderSystemUsersTable();
+                    populateAuditUserFilter();
+                });
             }
         }
 
         function onSysUserRoleChange() {
             const roleVal = document.getElementById('sysUserRole').value;
-            const permIds = ['perm_carData', 'perm_cardDa', 'perm_carInsurance', 'perm_financial', 'perm_reports', 'perm_licenseExp', 'perm_insuranceExp', 'perm_usersSettings', 'perm_codedCars', 'perm_systemAlerts', 'perm_add', 'perm_edit', 'perm_del', 'perm_export'];
+            const permIds = ['perm_carData', 'perm_cardDa', 'perm_carInsurance', 'perm_financial', 'perm_reports', 'perm_licenseExp', 'perm_insuranceExp', 'perm_usersSettings', 'perm_codedCars', 'perm_systemAlerts', 'perm_auditLog', 'perm_add', 'perm_edit', 'perm_del', 'perm_export'];
             permIds.forEach(id => {
                 const chk = document.getElementById(id);
                 if (chk) {
@@ -2918,7 +3208,7 @@ const firebaseConfig = {
             const role = document.getElementById('sysUserRole').value;
 
             const perms = role === 'مدير' ? {
-                carData: true, cardDa: true, carInsurance: true, financial: true, reports: true, licenseExp: true, insuranceExp: true, usersSettings: true, codedCars: true, systemAlerts: true, globalAdd: true, globalEdit: true, globalDel: true, globalExport: true
+                carData: true, cardDa: true, carInsurance: true, financial: true, reports: true, licenseExp: true, insuranceExp: true, usersSettings: true, codedCars: true, systemAlerts: true, auditLog: true, globalAdd: true, globalEdit: true, globalDel: true, globalExport: true
             } : {
                 carData: document.getElementById('perm_carData').checked,
                 cardDa: document.getElementById('perm_cardDa').checked,
@@ -2930,6 +3220,7 @@ const firebaseConfig = {
                 usersSettings: document.getElementById('perm_usersSettings').checked,
                 codedCars: document.getElementById('perm_codedCars').checked,
                 systemAlerts: document.getElementById('perm_systemAlerts').checked,
+                auditLog: document.getElementById('perm_auditLog').checked,
                 globalAdd: document.getElementById('perm_add').checked,
                 globalEdit: document.getElementById('perm_edit').checked,
                 globalDel: document.getElementById('perm_del').checked,
@@ -2945,6 +3236,7 @@ const firebaseConfig = {
             const idx = document.getElementById('sysUserEditIndex').value;
             if (idx !== '' && list[idx]) {
                 list[idx] = { user: u, pass: p, role, perms };
+                logUserActivity('تعديل', 'إعدادات المستخدمين', `تعديل بيانات وصلاحيات المستخدم: ${u} (${role})`);
                 saveSystemUsersList(list);
                 clearSystemUserForm();
                 customAlert('نجاح', 'تم تعديل المستخدم بنجاح', 'success');
@@ -2954,6 +3246,7 @@ const firebaseConfig = {
                     return;
                 }
                 list.push({ user: u, pass: p, role, perms });
+                logUserActivity('إدخال بيانات', 'إعدادات المستخدمين', `إضافة مستخدم جديد: ${u} (${role})`);
                 saveSystemUsersList(list);
                 clearSystemUserForm();
                 customAlert('نجاح', 'تم إضافة المستخدم بنجاح', 'success');
@@ -2967,7 +3260,7 @@ const firebaseConfig = {
             
             document.getElementById('sysUserRole').value = 'مستخدم';
             
-            const permIds = ['perm_carData', 'perm_cardDa', 'perm_carInsurance', 'perm_financial', 'perm_reports', 'perm_licenseExp', 'perm_insuranceExp', 'perm_usersSettings', 'perm_codedCars', 'perm_systemAlerts', 'perm_add', 'perm_edit', 'perm_del', 'perm_export'];
+            const permIds = ['perm_carData', 'perm_cardDa', 'perm_carInsurance', 'perm_financial', 'perm_reports', 'perm_licenseExp', 'perm_insuranceExp', 'perm_usersSettings', 'perm_codedCars', 'perm_systemAlerts', 'perm_auditLog', 'perm_add', 'perm_edit', 'perm_del', 'perm_export'];
             permIds.forEach(id => {
                 const chk = document.getElementById(id);
                 if (chk) {
@@ -2995,7 +3288,7 @@ const firebaseConfig = {
             tbody.innerHTML = '';
             list.forEach((item, index) => {
                 const p = item.perms || {};
-                const permsText = `[ بيانات: ${p.carData?'✓':'✗'} | تأمين: ${p.carInsurance?'✓':'✗'} | وثائق: ${p.insuranceExp?'✓':'✗'} | مالية: ${p.financial?'✓':'✗'} | تنبيهات النظام: ${p.systemAlerts?'✓':'✗'} ]`;
+                const permsText = `[ بيانات: ${p.carData?'✓':'✗'} | تأمين: ${p.carInsurance?'✓':'✗'} | وثائق: ${p.insuranceExp?'✓':'✗'} | مالية: ${p.financial?'✓':'✗'} | حركات المستخدمين: ${p.auditLog?'✓':'✗'} | تنبيهات النظام: ${p.systemAlerts?'✓':'✗'} ]`;
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-700/40">
                         <td class="p-3 font-mono text-sky-400 font-bold">${index + 1}</td>
@@ -3042,6 +3335,7 @@ const firebaseConfig = {
                 document.getElementById('perm_usersSettings').checked = !!p.usersSettings;
                 document.getElementById('perm_codedCars').checked = !!p.codedCars;
                 document.getElementById('perm_systemAlerts').checked = !!p.systemAlerts;
+                document.getElementById('perm_auditLog').checked = !!p.auditLog;
                 document.getElementById('perm_add').checked = !!p.globalAdd;
                 document.getElementById('perm_edit').checked = !!p.globalEdit;
                 document.getElementById('perm_del').checked = !!p.globalDel;
@@ -3056,7 +3350,9 @@ const firebaseConfig = {
             if (!checkGlobalPermission('del')) return;
             showConfirmDialog("هل أنت متأكد من حذف هذا المستخدم؟", function() {
                 let list = getSystemUsers();
+                const deletedUser = list[index]?.user || '';
                 list.splice(index, 1);
+                logUserActivity('حذف', 'إعدادات المستخدمين', `حذف المستخدم: ${deletedUser}`);
                 saveSystemUsersList(list);
                 customAlert('نجاح', 'تم حذف المستخدم بنجاح', 'success');
             }, 'تأكيد الحذف', '<i class="fa-solid fa-triangle-exclamation"></i>');
@@ -3212,6 +3508,7 @@ const firebaseConfig = {
                 customAlert('تنبيه', 'لا توجد بيانات مطابقة للطباعة!', 'warning');
                 return;
             }
+            logUserActivity('تصدير', 'التقارير المتقدمة', `طباعة PDF للتقرير المتقدم (النتائج: ${filtered.length})`);
 
             const typeFilter = document.getElementById('repCarTypeFilter').value;
             const modelFilter = document.getElementById('repCarModelFilter').value;
@@ -3232,20 +3529,20 @@ const firebaseConfig = {
                     <meta charset="UTF-8">
                     <title>تقرير السيارات المتقدم</title>
                     <style>
-                        @page { size: A4 landscape; margin: 6mm 5mm 14mm 5mm; }
+                        @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm; }
                         body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #fff; margin: 0; padding: 0; overflow: hidden; }
                         .filter-summary-box {
-                            border: 1px solid #0284c7; background: #f0f9ff; border-radius: 4px; padding: 4px 8px; margin-bottom: 6px; font-size: 7.5px; line-height: 1.5;
+                            border: 1px solid #0284c7; background: #f0f9ff; border-radius: 4px; padding: 4px 8px; margin-bottom: 6px; font-size: 8.5px; line-height: 1.5;
                             display: flex; flex-wrap: wrap; gap: 10px; color: #0369a1; font-weight: bold;
                         }
-                        table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 8px; table-layout: fixed; }
-                        th, td { border: 1px solid #cbd5e1; padding: 3px; text-align: right; word-wrap: break-word; }
+                        table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 9px; table-layout: fixed; }
+                        th, td { border: 1px solid #cbd5e1; padding: 3.5px 4px; text-align: right; word-wrap: break-word; line-height: 1.25; }
                         th { background-color: #0284c7 !important; color: #fff !important; -webkit-print-color-adjust: exact; }
                         .print-footer-box {
                             position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
-                            background: #ffffff; font-size: 8px; font-family: 'Cairo', monospace;
+                            background: #ffffff; font-size: 10px; font-weight: bold; font-family: 'Cairo', monospace;
                             display: flex; justify-content: space-between; align-items: center;
-                            color: #334155; padding: 3px 5mm; border-top: 1.5px solid #0284c7;
+                            color: #0f172a; padding: 4px 6mm; border-top: 2px solid #0284c7;
                             -webkit-print-color-adjust: exact;
                         }
                         .pageNumber:before { content: counter(page); }
@@ -3322,6 +3619,7 @@ const firebaseConfig = {
                 customAlert('تنبيه', 'لا توجد بيانات مطابقة للتصدير!', 'warning');
                 return;
             }
+            logUserActivity('تصدير', 'التقارير المتقدمة', `تصدير Excel للتقرير المتقدم (النتائج: ${filtered.length})`);
 
             const typeFilter = document.getElementById('repCarTypeFilter').value;
             const modelFilter = document.getElementById('repCarModelFilter').value;
@@ -3370,7 +3668,6 @@ const firebaseConfig = {
             XLSX.writeFile(workbook, "Advanced_Cars_Report.xlsx");
         }
 
-        // طباعة تقرير الرخص بناءً على تاريخ التكويد المعتمد
         function printSpecificExpiryReport(type) {
             if (!checkGlobalPermission('export')) return;
             const codedCars = getCodedCars();
@@ -3389,22 +3686,23 @@ const firebaseConfig = {
                 customAlert('تنبيه', 'لا توجد بيانات مطابقة لهذا التقرير!', 'warning');
                 return;
             }
+            logUserActivity('تصدير', 'حالة رخص السيارات', `طباعة PDF تقرير الرخص (${type === 'expired' ? 'المنتهية' : 'القريبة'}) - العدد: ${subset.length}`);
 
             let printWin = window.open('', '_blank');
             let titleStr = type === 'expired' ? 'تقرير رخص السيارات المنتهية بالكامل (من التكويد)' : `تقرير رخص السيارات التي تنتهي خلال الفترة المحددة (${licDaysLimit} يوم - من التكويد)`;
             let htmlContent = `
                 <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>${titleStr}</title>
                 <style>
-                    @page { size: A4 landscape; margin: 6mm 5mm 14mm 5mm; }
+                    @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm; }
                     body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #fff; margin: 0; padding: 0; overflow: hidden; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 8.5px; table-layout: fixed; }
-                    th, td { border: 1px solid #cbd5e1; padding: 3px; text-align: right; word-wrap: break-word; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 9.5px; table-layout: fixed; }
+                    th, td { border: 1px solid #cbd5e1; padding: 3.5px 4px; text-align: right; word-wrap: break-word; line-height: 1.25; }
                     th { background-color: ${type==='expired'?'#dc2626':'#d97706'} !important; color: #fff !important; -webkit-print-color-adjust: exact; }
                     .print-footer-box {
                         position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
-                        background: #ffffff; font-size: 8px; font-family: 'Cairo', monospace;
+                        background: #ffffff; font-size: 10px; font-weight: bold; font-family: 'Cairo', monospace;
                         display: flex; justify-content: space-between; align-items: center;
-                        color: #334155; padding: 3px 5mm; border-top: 1.5px solid #0284c7;
+                        color: #0f172a; padding: 4px 6mm; border-top: 2px solid #0284c7;
                         -webkit-print-color-adjust: exact;
                     }
                     .pageNumber:before { content: counter(page); }
@@ -3421,7 +3719,12 @@ const firebaseConfig = {
                 const codingExpiry = c.expiryDate || getCodingDateForCar(c.num);
                 htmlContent += `<tr><td>${idx+1}</td><td><b>${c.num}</b></td><td>${carInfo.name||'غير مُسلم'}</td><td>${carInfo.phone||'-'}</td><td>${c.type||carInfo.type||'-'}</td><td>${c.model||carInfo.model||'-'}</td><td>${carInfo.workplace||'-'}</td><td>${codingExpiry}</td></tr>`;
             });
-            htmlContent += `</tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
+            htmlContent += `
+                            <tr style="background:#f8fafc;font-weight:bold;">
+                                <td colspan="5">إجمالي عدد الرخص</td>
+                                <td colspan="3">${subset.length} رخصة</td>
+                            </tr>
+                        </tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
             printWin.document.write(htmlContent);
             printWin.document.close();
         }
@@ -3444,22 +3747,23 @@ const firebaseConfig = {
                 customAlert('تنبيه', 'لا توجد وثائق تأمين مطابقة لهذا التقرير!', 'warning');
                 return;
             }
+            logUserActivity('تصدير', 'انتهاء وثائق التأمين', `طباعة PDF تقرير وثائق التأمين (${type === 'expired' ? 'المنتهية' : 'القريبة'}) - العدد: ${subset.length}`);
 
             let printWin = window.open('', '_blank');
             let titleStr = type === 'expired' ? 'تقرير وثائق التأمين المنتهية بالكامل' : `وثائق التأمين التي ستنتهى خلال الفترة المحددة (${insDaysLimit} يوم)`;
             let htmlContent = `
                 <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>${titleStr}</title>
                 <style>
-                    @page { size: A4 landscape; margin: 6mm 5mm 14mm 5mm; }
+                    @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm; }
                     body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #fff; margin: 0; padding: 0; overflow: hidden; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 8.5px; table-layout: fixed; }
-                    th, td { border: 1px solid #cbd5e1; padding: 3px; text-align: right; word-wrap: break-word; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 9.5px; table-layout: fixed; }
+                    th, td { border: 1px solid #cbd5e1; padding: 3.5px 4px; text-align: right; word-wrap: break-word; line-height: 1.25; }
                     th { background-color: #4f46e5 !important; color: #fff !important; -webkit-print-color-adjust: exact; }
                     .print-footer-box {
                         position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
-                        background: #ffffff; font-size: 8px; font-family: 'Cairo', monospace;
+                        background: #ffffff; font-size: 10px; font-weight: bold; font-family: 'Cairo', monospace;
                         display: flex; justify-content: space-between; align-items: center;
-                        color: #334155; padding: 3px 5mm; border-top: 1.5px solid #0284c7;
+                        color: #0f172a; padding: 4px 6mm; border-top: 2px solid #0284c7;
                         -webkit-print-color-adjust: exact;
                     }
                     .pageNumber:before { content: counter(page); }
@@ -3475,7 +3779,12 @@ const firebaseConfig = {
                 const c = cars.find(x => x.num === item.num) || codedCars.find(x => x.num === item.num) || {};
                 htmlContent += `<tr><td>${idx+1}</td><td><b>${item.num}</b></td><td>${c.name||'غير مُسلم'}</td><td>${c.phone||'-'}</td><td>${item.type||c.type||'-'}</td><td>${item.model||c.model||'-'}</td><td>${c.workplace||'-'}</td><td>${item.company||'-'}</td><td>${item.endDate}</td></tr>`;
             });
-            htmlContent += `</tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
+            htmlContent += `
+                            <tr style="background:#eef2ff;font-weight:bold;">
+                                <td colspan="5">إجمالي عدد وثائق التأمين</td>
+                                <td colspan="4">${subset.length} وثيقة</td>
+                            </tr>
+                        </tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
             printWin.document.write(htmlContent);
             printWin.document.close();
         }
@@ -3484,6 +3793,7 @@ const firebaseConfig = {
             if (!checkGlobalPermission('export')) return;
             const cars = getCars();
             if (cars.length === 0) return;
+            logUserActivity('تصدير', 'السيارات المستلمة', `تصدير Excel لبيانات السيارات المستلمة (العدد: ${cars.length})`);
             const dataToExport = cars.map((c, idx) => {
                 const insObj = insuranceCache.find(i => i.num === c.num && i.company && i.company.trim() !== '') || {};
                 const effectiveExpiry = getCodingDateForCar(c.num) || c.expiryDate || '';
@@ -3517,6 +3827,20 @@ const firebaseConfig = {
             const todayStr = new Date().toISOString().split('T')[0];
 
             const todayPositiveExpenses = expenses.filter(e => e.date === todayStr && (Number(e.amount) || 0) > 0);
+            if (todayPositiveExpenses.length === 0) return;
+
+            logUserActivity('تصدير', 'الحركات المالية اليومية', `تصدير Excel لحركات اليوم (${todayStr}) - العدد: ${todayPositiveExpenses.length}`);
+
+            let dailyTotalSum = 0;
+            todayPositiveExpenses.forEach(e => {
+                dailyTotalSum += Number(e.amount) || 0;
+            });
+
+            let sumOfAllAccumulatedTotals = 0;
+            (historyExpensesCache || []).forEach(e => {
+                const amt = Number(e.amount) || 0;
+                if (amt > 0) sumOfAllAccumulatedTotals += amt;
+            });
 
             const carAccumulatedTotalsMap = {};
             (historyExpensesCache || []).forEach(e => {
@@ -3538,12 +3862,35 @@ const firebaseConfig = {
                     "الموديل": e.carModel || c.model || '',
                     "اسم المستلم": e.customUser || c.name || '',
                     "بيان الحركة": e.desc || '',
-                    "مبلغ الحركة اليومية": e.amount,
+                    "مبلغ الحركة اليومية": Number(e.amount) || 0,
                     "المبلغ التراكمي للسيارة (من الأرشيف)": carAccumulated
                 };
             });
 
-            if (exportRows.length === 0) return;
+            exportRows.push({
+                "م": "الإجمالي",
+                "التاريخ": "",
+                "رقم السيارة": "",
+                "نوع السيارة": "",
+                "الموديل": "",
+                "اسم المستلم": "",
+                "بيان الحركة": "إجمالي مبلغ حركات اليوم",
+                "مبلغ الحركة اليومية": dailyTotalSum,
+                "المبلغ التراكمي للسيارة (من الأرشيف)": ""
+            });
+
+            exportRows.push({
+                "م": "التراكمي العام",
+                "التاريخ": "",
+                "رقم السيارة": "",
+                "نوع السيارة": "",
+                "الموديل": "",
+                "اسم المستلم": "",
+                "بيان الحركة": "إجمالي المبلغ التراكمي الشامل",
+                "مبلغ الحركة اليومية": "",
+                "المبلغ التراكمي للسيارة (من الأرشيف)": sumOfAllAccumulatedTotals
+            });
+
             const worksheet = XLSX.utils.json_to_sheet(exportRows);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "الحركات المالية اليومية");
@@ -3561,21 +3908,32 @@ const firebaseConfig = {
                 return;
             }
 
+            logUserActivity('تصدير', 'الحركات المالية اليومية', `طباعة PDF لحركات اليوم (${todayStr}) - العدد: ${todayPositiveExpenses.length}`);
+
             let printWin = window.open('', '_blank');
             const cars = getCars();
+            let dailyTotalSum = 0;
+            todayPositiveExpenses.forEach(e => { dailyTotalSum += Number(e.amount) || 0; });
+
+            let sumOfAllAccumulatedTotals = 0;
+            (historyExpensesCache || []).forEach(e => {
+                const amt = Number(e.amount) || 0;
+                if (amt > 0) sumOfAllAccumulatedTotals += amt;
+            });
+
             let htmlContent = `
                 <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير الحركات المالية اليومية</title>
                 <style>
-                    @page { size: A4 landscape; margin: 6mm 5mm 14mm 5mm; }
+                    @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm; }
                     body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #fff; margin: 0; padding: 0; overflow: hidden; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 8.5px; table-layout: fixed; }
-                    th, td { border: 1px solid #cbd5e1; padding: 3px; text-align: right; word-wrap: break-word; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 9.5px; table-layout: fixed; }
+                    th, td { border: 1px solid #cbd5e1; padding: 3.5px 4px; text-align: right; word-wrap: break-word; line-height: 1.25; }
                     th { background-color: #059669 !important; color: #fff !important; -webkit-print-color-adjust: exact; }
                     .print-footer-box {
                         position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
-                        background: #ffffff; font-size: 8px; font-family: 'Cairo', monospace;
+                        background: #ffffff; font-size: 10px; font-weight: bold; font-family: 'Cairo', monospace;
                         display: flex; justify-content: space-between; align-items: center;
-                        color: #334155; padding: 3px 5mm; border-top: 1.5px solid #0284c7;
+                        color: #0f172a; padding: 4px 6mm; border-top: 2px solid #0284c7;
                         -webkit-print-color-adjust: exact;
                     }
                     .pageNumber:before { content: counter(page); }
@@ -3605,7 +3963,18 @@ const firebaseConfig = {
                 htmlContent += `<tr><td>${idx+1}</td><td>${exp.date||'-'}</td><td><b>${exp.carNum}</b></td><td>${displayType}</td><td>${displayModel}</td><td>${exp.customUser||c.name||'-'}</td><td>${exp.desc||'-'}</td><td>${exp.amount.toLocaleString()}</td><td>${carAccumulated.toLocaleString()}</td></tr>`;
             });
 
-            htmlContent += `</tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
+            htmlContent += `
+                        <tr style="background:#ecfdf5;font-weight:bold;">
+                            <td colspan="7">إجمالي مبلغ حركات اليوم</td>
+                            <td>${dailyTotalSum.toLocaleString()}</td>
+                            <td></td>
+                        </tr>
+                        <tr style="background:#f0f9ff;font-weight:bold;">
+                            <td colspan="7">إجمالي المبلغ التراكمي الشامل</td>
+                            <td></td>
+                            <td>${sumOfAllAccumulatedTotals.toLocaleString()}</td>
+                        </tr>
+                    </tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
             printWin.document.write(htmlContent);
             printWin.document.close();
         }
@@ -3623,22 +3992,40 @@ const firebaseConfig = {
                 return;
             }
 
+            logUserActivity('تصدير', 'كروت المصاريف', `طباعة PDF لكارت مصاريف السيارة رقم: ${carNum}`);
+
             let printWin = window.open('', '_blank');
             const cars = getCars();
+            const coded = getCodedCars();
             const currentCar = cars.find(c => c.num === carNum) || {};
+            const codedCar = coded.find(c => c.num === carNum) || {};
+            const carTypeVal = currentCar.type || codedCar.type || '-';
+            const carModelVal = currentCar.model || codedCar.model || '-';
+            const carRgVal = currentCar.rg || '-';
+            const carExpiryVal = getCodingDateForCar(carNum) || currentCar.expiryDate || '-';
+            const carUserVal = currentCar.name || '-';
+            const carPhoneVal = currentCar.phone || '-';
+            const carWorkplaceVal = currentCar.workplace || '-';
+
             let htmlContent = `
                 <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>كارت مصاريف السيارة - ${carNum}</title>
                 <style>
-                    @page { size: A4 landscape; margin: 6mm 5mm 14mm 5mm; }
+                    @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm; }
                     body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #fff; margin: 0; padding: 0; overflow: hidden; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 8.5px; table-layout: fixed; }
-                    th, td { border: 1px solid #cbd5e1; padding: 3px; text-align: right; word-wrap: break-word; }
+                    .car-info-header {
+                        border: 1px solid #ea580c; background: #fff7ed; border-radius: 5px; padding: 6px 10px; margin-bottom: 6px;
+                        font-size: 9.5px; line-height: 1.5; color: #0f172a;
+                        display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; font-weight: bold;
+                        -webkit-print-color-adjust: exact;
+                    }
+                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 9.5px; table-layout: fixed; }
+                    th, td { border: 1px solid #cbd5e1; padding: 3.5px 4px; text-align: right; word-wrap: break-word; line-height: 1.25; }
                     th { background-color: #ea580c !important; color: #fff !important; -webkit-print-color-adjust: exact; }
                     .print-footer-box {
                         position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
-                        background: #ffffff; font-size: 8px; font-family: 'Cairo', monospace;
+                        background: #ffffff; font-size: 10px; font-weight: bold; font-family: 'Cairo', monospace;
                         display: flex; justify-content: space-between; align-items: center;
-                        color: #334155; padding: 3px 5mm; border-top: 1.5px solid #0284c7;
+                        color: #0f172a; padding: 4px 6mm; border-top: 2px solid #0284c7;
                         -webkit-print-color-adjust: exact;
                     }
                     .pageNumber:before { content: counter(page); }
@@ -3646,16 +4033,35 @@ const firebaseConfig = {
                 </style></head>
                 <body>
                     ${getPrintHeaderFooterHTML(`كارت مصاريف وصيانة السيارة رقم: ${carNum}`)}
+                    <div class="car-info-header">
+                        <div>نوع السيارة: <span>${carTypeVal}</span></div>
+                        <div>الموديل: <span>${carModelVal}</span></div>
+                        <div>RG: <span>${carRgVal}</span></div>
+                        <div>تاريخ انتهاء الرخصة: <span>${carExpiryVal}</span></div>
+                        <div>اسم المستلم: <span>${carUserVal}</span></div>
+                        <div>رقم التليفون: <span>${carPhoneVal}</span></div>
+                        <div style="grid-column: span 2;">مكان العمل: <span>${carWorkplaceVal}</span></div>
+                    </div>
                     <table>
-                        <thead><tr><th style="width: 4%;">#</th><th style="width: 11%;">التاريخ</th><th style="width: 14%;">المستلم</th><th style="width: 11%;">التليفون</th><th style="width: 12%;">مكان العمل</th><th style="width: 8%;">RG</th><th style="width: 22%;">البيان / الوصف</th><th style="width: 9%;">المبلغ</th><th style="width: 9%;">التراكمي</th></tr></thead>
+                        <thead><tr><th style="width: 4%;">#</th><th style="width: 11%;">التاريخ</th><th style="width: 14%;">المستلم</th><th style="width: 11%;">التليفون</th><th style="width: 12%;">مكان العمل</th><th style="width: 8%;">RG</th><th style="width: 20%;">الوصف / البيان</th><th style="width: 12%;">المبلغ</th><th style="width: 12%;">التراكمي</th></tr></thead>
                         <tbody>
             `;
-            let runningTotal = 0;
-            expenses.forEach((item, index) => {
-                runningTotal += item.amount;
-                htmlContent += `<tr><td>${index+1}</td><td>${item.date||'-'}</td><td>${item.customUser||currentCar.name||'-'}</td><td>${item.customPhone||currentCar.phone||'-'}</td><td>${item.customWorkplace||currentCar.workplace||'-'}</td><td>${item.customRg||currentCar.rg||'-'}</td><td>${item.desc}</td><td>${item.amount.toLocaleString()}</td><td>${runningTotal.toLocaleString()}</td></tr>`;
+            let cum = 0;
+            expenses.forEach((exp, idx) => {
+                cum += Number(exp.amount) || 0;
+                const dUser = exp.customUser || currentCar.name || '-';
+                const dPhone = exp.customPhone || currentCar.phone || '-';
+                const dWork = exp.customWorkplace || currentCar.workplace || '-';
+                const dRg = exp.customRg || currentCar.rg || '-';
+                htmlContent += `<tr><td>${idx+1}</td><td>${exp.date||'-'}</td><td>${dUser}</td><td>${dPhone}</td><td>${dWork}</td><td>${dRg}</td><td>${exp.desc||'-'}</td><td>${(Number(exp.amount)||0).toLocaleString()}</td><td>${cum.toLocaleString()}</td></tr>`;
             });
-            htmlContent += `</tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
+            htmlContent += `
+                        <tr style="background:#fff7ed;font-weight:bold;">
+                            <td colspan="7">إجمالي المصاريف</td>
+                            <td>${cum.toLocaleString()}</td>
+                            <td>${cum.toLocaleString()}</td>
+                        </tr>
+                    </tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
             printWin.document.write(htmlContent);
             printWin.document.close();
         }
@@ -3663,163 +4069,103 @@ const firebaseConfig = {
         function exportExpenseCardExcel() {
             if (!checkGlobalPermission('export')) return;
             const carNum = document.getElementById('cardVehicleSelect').value;
-            const expenses = getExpenses().filter(x => x.carNum === carNum);
-            if (expenses.length === 0) return;
-            const dataToExport = expenses.map((e, idx) => ({
-                "م": idx + 1,
-                "التاريخ": e.date,
-                "الوصف": e.desc,
-                "المبلغ": e.amount
-            }));
-            const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "كارت مصاريف السيارة");
-            XLSX.writeFile(workbook, `Car_Card_${carNum}.xlsx`);
-        }
-
-        function populateVehicleDropdown() {
-            const expenses = getExpenses();
-            const select = document.getElementById('cardVehicleSelect');
-            if(!select) return;
-            const currentSelected = select.value;
-            select.innerHTML = '<option value="">-- اختر رقم السيارة --</option>';
-            
-            const cardCarNums = [...new Set(expenses.map(e => e.carNum))].filter(Boolean);
-            const cars = getCars();
-            const coded = getCodedCars();
-
-            cardCarNums.forEach(carNum => {
-                const foundCar = cars.find(c => c.num === carNum) || coded.find(c => c.num === carNum);
-                const opt = document.createElement('option');
-                opt.value = carNum;
-                opt.innerText = foundCar ? `${carNum} (${foundCar.type || ''} - ${foundCar.model || ''})` : `${carNum}`;
-                select.appendChild(opt);
-            });
-
-            if (currentSelected && cardCarNums.includes(currentSelected)) {
-                select.value = currentSelected;
-            } else {
-                select.value = "";
-                clearCardDetailsView();
-            }
-
-            document.getElementById('cardsCountBadge').innerText = cardCarNums.length;
-            document.getElementById('statTotalVehiclesWithCards').innerText = cardCarNums.length;
-        }
-
-        function clearCardDetailsView() {
-            document.getElementById('cardCarTypeDisplay').innerText = '-';
-            document.getElementById('cardCarModelDisplay').innerText = '-';
-            document.getElementById('cardCarRgDisplay').innerText = '-';
-            document.getElementById('cardCarExpiryDisplay').innerText = '-';
-            document.getElementById('cardCarUserDisplay').innerText = '-';
-            document.getElementById('cardCarPhoneDisplay').innerText = '-';
-            document.getElementById('cardCarWorkplaceDisplay').innerText = '-';
-            document.getElementById('cardTotalExpensesDisplay').innerText = 'إجمالي المصاريف: 0.00';
-            
-            const tbody = document.getElementById('expenseTableBody');
-            if (tbody) {
-                tbody.innerHTML = '<tr><td colspan="10" class="text-center py-6 text-slate-400">يرجى اختيار سيارة لعرض كارت المصاريف الخاص بها</td></tr>';
-            }
-        }
-
-        function confirmDeleteExpenseCard() {
-            if (!checkGlobalPermission('del')) return;
-            const carNum = document.getElementById('cardVehicleSelect').value;
             if (!carNum) {
-                customAlert('تنبيه', 'يرجى اختيار رقم السيارة أولاً لتنفيذ العملية!', 'warning');
+                customAlert('تنبيه', 'اختر سيارة أولاً لتصدير كارت المصاريف الخاص بها!', 'warning');
                 return;
             }
-            showConfirmDialog(`هل أنت متأكد من رغبتك في إغلاق أو إخفاء عرض كارت السيارة رقم (${carNum})؟\n(ملاحظة: سيتم الاحتفاظ بكامل الحركات المالية والمبالغ في جدول الحركات المالية ولا يتم حذفها)`, function() {
-                document.getElementById('cardVehicleSelect').value = "";
-                clearCardDetailsView();
-                customAlert('نجاح', `تم إلغاء تحديد الكارت مع الاحتفاظ بكافة الحركات المالية والمبالغ للسيارة رقم (${carNum}) في جدول الحركات المالية تماماً!`, 'success');
-            }, 'تأكيد العملية (الاحتفاظ بالحركات المالية)', '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
+            const expenses = getExpenses().filter(x => x.carNum === carNum);
+            if (expenses.length === 0) {
+                customAlert('تنبيه', 'لا توجد مصاريف مسجلة لهذه السيارة للتصدير!', 'warning');
+                return;
+            }
+
+            logUserActivity('تصدير', 'كروت المصاريف', `تصدير Excel لكارت مصاريف السيارة رقم: ${carNum}`);
+
+            const cars = getCars();
+            const coded = getCodedCars();
+            const currentCar = cars.find(c => c.num === carNum) || {};
+            const codedCar = coded.find(c => c.num === carNum) || {};
+            const carTypeVal = currentCar.type || codedCar.type || '-';
+            const carModelVal = currentCar.model || codedCar.model || '-';
+            const carRgVal = currentCar.rg || '-';
+            const carExpiryVal = getCodingDateForCar(carNum) || currentCar.expiryDate || '-';
+            const carUserVal = currentCar.name || '-';
+            const carPhoneVal = currentCar.phone || '-';
+            const carWorkplaceVal = currentCar.workplace || '-';
+
+            const headerRows = [
+                { "#": "بيانات السيارة", "التاريخ": `رقم السيارة: ${carNum}`, "المستلم": `نوع السيارة: ${carTypeVal}`, "التليفون": `الموديل: ${carModelVal}`, "مكان العمل": `RG: ${carRgVal}`, "RG": `انتهاء الرخصة: ${carExpiryVal}` },
+                { "#": "بيانات المستلم", "التاريخ": `اسم المستلم: ${carUserVal}`, "المستلم": `رقم التليفون: ${carPhoneVal}`, "التليفون": `مكان العمل: ${carWorkplaceVal}`, "مكان العمل": "", "RG": "" },
+                {}
+            ];
+
+            let cum = 0;
+            const rows = expenses.map((exp, idx) => {
+                const amt = Number(exp.amount) || 0;
+                cum += amt;
+                return {
+                    "#": idx + 1,
+                    "التاريخ": exp.date || '',
+                    "المستلم": exp.customUser || carUserVal,
+                    "التليفون": exp.customPhone || carPhoneVal,
+                    "مكان العمل": exp.customWorkplace || carWorkplaceVal,
+                    "RG": exp.customRg || carRgVal,
+                    "الوصف / البيان": exp.desc || '',
+                    "المبلغ": amt,
+                    "إجمالي المصاريف التراكمي": cum
+                };
+            });
+
+            rows.push({
+                "#": "الإجمالي",
+                "التاريخ": "",
+                "المستلم": "",
+                "التليفون": "",
+                "مكان العمل": "",
+                "RG": "",
+                "الوصف / البيان": "إجمالي المصاريف",
+                "المبلغ": cum,
+                "إجمالي المصاريف التراكمي": cum
+            });
+
+            const worksheet = XLSX.utils.json_to_sheet([...headerRows, ...rows], { skipHeader: false });
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, `كارت_${carNum}`);
+            XLSX.writeFile(workbook, `Car_Card_Expenses_${carNum}.xlsx`);
         }
 
-        function printUserGuidePDF() { 
-            let printWin = window.open('', '_blank'); 
+        function printUserGuidePDF() {
+            if (!checkGlobalPermission('export')) return;
+            logUserActivity('تصدير', 'الرئيسية', 'طباعة دليل المستخدم PDF');
+            let printWin = window.open('', '_blank');
             let htmlContent = `
-                <html lang="ar" dir="rtl"> 
-                <head> 
-                    <meta charset="UTF-8"> 
-                    <title>دليل المستخدم الشامل - نظام إدارة السيارات</title> 
-                    <style> 
-                        @page { size: A4 portrait; margin: 10mm 8mm 14mm 8mm; } 
-                        html, body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #ffffff; margin: 0; padding: 0; width: 100%; height: auto; overflow: hidden; } 
-                        .guide-container { padding: 2px; box-sizing: border-box; } 
-                        h1 { text-align: center; color: #0f172a; font-size: 13px; border-bottom: 2px solid #0284c7; padding-bottom: 3px; margin-bottom: 6px; } 
-                        h2 { color: #0284c7; font-size: 9.5px; margin-top: 4px; margin-bottom: 2px; border-bottom: 1px solid #cbd5e1; padding-bottom: 1px; } 
-                        p, li { font-size: 8px; line-height: 1.3; color: #334155; margin: 1px 0; } 
-                        .section-box { border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 4px; padding: 4px 6px; margin-bottom: 3px; page-break-inside: avoid; } 
-                        .print-footer-box { position: fixed; bottom: 0; left: 0; right: 0; width: 100%; background: #ffffff; font-size: 8px; font-family: 'Cairo', monospace; display: flex; justify-content: space-between; align-items: center; color: #334155; padding: 3px 5mm; box-sizing: border-box; border-top: 1.5px solid #0284c7; z-index: 9999; -webkit-print-color-adjust: exact; } 
-                        .pageNumber:before { content: counter(page); }
-                        .totalPages:before { content: counter(pages); }
-                    </style> 
-                </head> 
-                <body> 
-                    <div class="guide-container"> 
-                        <h1>دليل المستخدم الشامل لنظام إدارة السيارات وكروت المصاريف وتأمين المركبات</h1> 
-                        
-                        <div class="section-box"> 
-                            <h2>1. الشاشة الرئيسية (MAIN)</h2> 
-                            <p><b>الوصف:</b> اللوحة المركزية (Dashboard) للنظام، وتمنح نظرة عامة شاملة وفورية على حالة الأسطول فور تسجيل الدخول.</p> 
-                            <p><b>شريط الإحصائيات (Summary Badges):</b> إجمالي السيارات المكوّدة، السيارات المستخدمة والمستلمة، كروت السيارات، رخص قاربت الانتهاء / منتهية، وتأمين قارب انتهاؤه / وثائق منتهية.</p> 
-                            <p><b>أبرز الإجراءات:</b> زر "فتح بيانات مستلم" للانتقال السريع، وزر "دليل المستخدم" لطباعة التقرير بصيغة PDF.</p> 
-                        </div> 
-
-                        <div class="section-box"> 
-                            <h2>2. شاشة بيانات السيارات المستلمة (CAR DATA)</h2> 
-                            <p><b>الوصف:</b> مخصصة لإدخال وتعديل وتسليم السيارات للموظفين ومواقع العمل وتتبع بيانات الترخيص والتأمين.</p> 
-                            <p><b>طريقة العمل:</b> اختيار رقم السيارة من القائمة المنسدلة (يجلب النوع والموديل وتاريخ انتهاء الرخصة والتأمين تلقائياً)، إدخال بيانات المستلم، التليفون، مكان العمل، تاريخ الاستلام، RG، كارت البنزين والملاحظات.</p> 
-                            <p><b>أزرار التحكم:</b> ADD (إنشاء حركة مستلم جديد بقيمة 0)، EDIT، DELETE (يسجل "ايقاف واستلام" في الكارت ثم يحذف مع الاحتفاظ بالحركات المالية في الأرشيف)، تفريغ، وتصدير إكسل.</p> 
-                        </div> 
-
-                        <div class="section-box"> 
-                            <h2>3. شاشة كروت السيارات ومصاريف الصيانة (CARD DA)</h2> 
-                            <p><b>الوصف:</b> لتدوين ومتابعة مصاريف التشغيل والصيانة وقطع الغيار والوقود لكل سيارة.</p> 
-                            <p><b>طريقة العمل:</b> اختيار رقم السيارة (لعرض بياناتها وتاريخ انتهاء الرخصة)، تحديد تاريخ الحركة، وصف البيان، وإدخال المبلغ (> 0) مع احتساب الإجمالي التراكمي تلقائياً.</p> 
-                            <p><b>أزرار التحكم:</b> ADD CARD ENTRY، DEL CARD، SAVE PDF / EXCEL CARD، وحذف بند محدد مع بقائه محفوظاً في الأرشيف الدائم.</p> 
-                        </div> 
-
-                        <div class="section-box"> 
-                            <h2>4. شاشة تأمين السيارات (Car Insurance)</h2> 
-                            <p><b>الوصف:</b> إدارة وثائق التأمين الشامل أو الضد لجميع مركبات الأسطول ومتابعة سريانها وتاريخ انتهاء الرخصة التلقائي من التكويد.</p> 
-                            <p><b>طريقة العمل:</b> تعديل/إضافة وثيقة تأمين (تاريخ انتهاء الرخصة التلقائي، اسم شركة التأمين وتواريخ البداية والنهاية)، عرض جدول وثائق التأمين المعتمدة، وسجل السيارات التي ليس لها تأمين مع زر إضافة تأمين الآن.</p> 
-                        </div> 
-
-                        <div class="section-box"> 
-                            <h2>5. شاشة الحركات المالية (FINANCIAL)</h2> 
-                            <p><b>الوصف:</b> المتابعة والتدقيق المالي وتتضمن جدولين: حركات اليوم (> 0) مع مؤشرات سريعة، وسجل الحركات المالية السابقة (الأرشيف المستقل الدائم غير القابل للتأثر بعمليات الحذف أو التعديل، مع شريط فلترة بالتواريخ للطباعة والتصدير).</p> 
-                        </div> 
-
-                        <div class="section-box"> 
-                            <h2>6. شاشة التقارير المتقدمة (REPORTS)</h2> 
-                            <p><b>الوصف:</b> المحرك التحليلي للنظام لاستخراج كشوفات مخصصة بفلترة متعددة الشروط (النوع، الموديل، موقع العمل، Rg-الملكية، شركة التأمين، ونطاقات تواريخ الاستلام وانتهاء الرخص والتأمين) مع طباعة PDF وتصدير إكسل منسقين.</p> 
-                        </div> 
-
-                        <div class="section-box"> 
-                            <h2>7 & 8. تنبيهات الرخص والتأمين (License Expir & Insurance Expi)</h2> 
-                            <p><b>الوصف:</b> شاشتا المتابعة الوقائية للرخص ووثائق التأمين المنتهية (باللون الأحمر) والقريبة من الانتهاء (باللون الأصفر) وفقاً للأيام المحددة في الإعدادات، مع خاصية التحديث المباشر للتاريخ واستخراج تقارير PDF منفصلة.</p> 
-                        </div> 
-
-                        <div class="section-box"> 
-                            <h2>9. شاشة الإعدادات والتحكم (SETTINGS) وأمان الجلسات</h2> 
-                            <p><b>أ. تكويد السيارات (Coded Cars):</b> القائمة المرجعية الأساسية لجميع أرقام وأنواع وموديلات وتواريخ انتهاء رخص السيارات.</p> 
-                            <p><b>ب. المستخدمين والصلاحيات (Users Management):</b> إنشاء الحسابات، وتحديد الصلاحيات التفصيلية للشاشات وأزرار العمليات (Add, Edit, Del, Export).</p> 
-                            <p><b>ج. تنبيهات النظام (System Alerts Config):</b> ضبط أيام التنبيه المبكر (10 إلى 60 يوماً).</p> 
-                            <p><b>🔒 أمان الجلسات:</b> قفل المحاولات الخاطئة (حظر 10 دقائق بعد 3 محاولات) والإغلاق التلقائي لعدم النشاط (Idle Timeout بعد 20 دقيقة).</p> 
-                        </div> 
-                    </div> 
-                    ${getPrintHeaderFooterHTML('دليل المستخدم الشامل للنظام')}
-                    <script> 
-                        window.onload = function() { window.print(); window.close(); } 
-                    <\/script> 
-                </body> 
-                </html> 
-            `; 
-            printWin.document.write(htmlContent); 
-            printWin.document.close(); 
+                <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>دليل المستخدم - نظام إدارة السيارات</title>
+                <style>
+                    @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm; }
+                    body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #fff; margin: 0; padding: 0; overflow: hidden; }
+                    h3 { color: #0284c7; margin: 6px 0 3px; font-size: 11px; }
+                    p, li { font-size: 9px; line-height: 1.4; }
+                    .print-footer-box {
+                        position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
+                        background: #ffffff; font-size: 10px; font-weight: bold; font-family: 'Cairo', monospace;
+                        display: flex; justify-content: space-between; align-items: center;
+                        color: #0f172a; padding: 4px 6mm; border-top: 2px solid #0284c7;
+                        -webkit-print-color-adjust: exact;
+                    }
+                    .pageNumber:before { content: counter(page); }
+                    .totalPages:before { content: counter(pages); }
+                </style></head>
+                <body>
+                    ${getPrintHeaderFooterHTML('دليل المستخدم الشامل لنظام إدارة السيارات وكروت المصاريف والتأمين')}
+                    <h3>1. تكويد السيارات المستلمة والتأمين:</h3>
+                    <p>من شاشة <b>الإعدادات</b> يمكن تكويد أرقام السيارات وبياناتها الأساسية وتاريخ انتهاء الرخصة، ثم إضافة وثيقة التأمين للسيارة وتواريخها.</p>
+                    <h3>2. بيانات السيارات وكروت المصاريف:</h3>
+                    <p>في شاشة <b>السيارات المستلمة</b> يتم تسجيل المستلمين، وفي <b>كروت المصاريف</b> يتم إدراج مصاريف الصيانة والوقود وحساب الرصيد التراكمي.</p>
+                    <h3>3. الحركات المالية والتنبيهات والصلاحيات:</h3>
+                    <p>متابعة حركات اليوم والأرشيف، وتنبيهات انتهاء الرخص والتأمين، وإدارة صلاحيات المستخدمين وسجل متابعة الحركات.</p>
+                    <script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
+            printWin.document.write(htmlContent);
+            printWin.document.close();
         }
 
         function getExpenses() { return expensesCache || []; }
@@ -3829,215 +4175,255 @@ const firebaseConfig = {
                 window.cloudSet(window.cloudRef(window.cloudDb, 'expenses'), list).then(() => {
                     renderExpensesTable();
                     renderFinancialTable();
-                    populateVehicleDropdown();
                     updateDashboardStats();
                 });
-            } else {
-                renderExpensesTable();
-                renderFinancialTable();
-                populateVehicleDropdown();
-                updateDashboardStats();
             }
+        }
+
+        function getHistoryExpenses() { return historyExpensesCache || []; }
+        function saveHistoryExpenses(list) {
+            historyExpensesCache = list;
+            if (window.cloudDb) {
+                window.cloudSet(window.cloudRef(window.cloudDb, 'historyExpenses'), list).then(() => {
+                    renderFinancialTable();
+                    renderHistoryFinancialTable();
+                });
+            }
+        }
+
+        function populateVehicleDropdown() {
+            const select = document.getElementById('cardVehicleSelect');
+            if(!select) return;
+            const codedCars = getCodedCars();
+            const expenses = getExpenses();
+            const cars = getCars();
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">-- اختر رقم السيارة --</option>';
+
+            const allNums = new Set([
+                ...codedCars.map(c => c.num),
+                ...cars.map(c => c.num),
+                ...expenses.map(e => e.carNum)
+            ].filter(Boolean));
+
+            allNums.forEach(num => {
+                const codedObj = codedCars.find(c => c.num === num);
+                const carObj = cars.find(c => c.num === num);
+                const label = codedObj ? `${num} (${codedObj.type} - ${codedObj.model})` : (carObj ? `${num} (${carObj.type} - ${carObj.model})` : num);
+                const opt = document.createElement('option');
+                opt.value = num;
+                opt.innerText = label;
+                select.appendChild(opt);
+            });
+            if (currentVal) select.value = currentVal;
         }
 
         function loadVehicleCardData() {
             const carNum = document.getElementById('cardVehicleSelect').value;
-            if (!carNum) {
-                clearCardDetailsView();
-                return;
-            }
             const cars = getCars();
-            const car = cars.find(c => c.num === carNum);
-            if (car) {
-                document.getElementById('cardCarTypeDisplay').innerText = car.type || '-';
-                document.getElementById('cardCarModelDisplay').innerText = car.model || '-';
-                document.getElementById('cardCarRgDisplay').innerText = car.rg || '-';
-                document.getElementById('cardCarExpiryDisplay').innerText = getCodingDateForCar(carNum) || car.expiryDate || '-';
-                document.getElementById('cardCarUserDisplay').innerText = car.name || '-';
-                document.getElementById('cardCarPhoneDisplay').innerText = car.phone || '-';
-                document.getElementById('cardCarWorkplaceDisplay').innerText = car.workplace || '-';
-            } else {
-                const coded = getCodedCars().find(c => c.num === carNum);
-                document.getElementById('cardCarTypeDisplay').innerText = coded ? coded.type : '-';
-                document.getElementById('cardCarModelDisplay').innerText = coded ? coded.model : '-';
-                document.getElementById('cardCarRgDisplay').innerText = '-';
-                document.getElementById('cardCarExpiryDisplay').innerText = getCodingDateForCar(carNum) || '-';
-                document.getElementById('cardCarUserDisplay').innerText = 'غير محدد';
-                document.getElementById('cardCarPhoneDisplay').innerText = '-';
-                document.getElementById('cardCarWorkplaceDisplay').innerText = '-';
-            }
-            renderExpensesTable();
-        }
+            const coded = getCodedCars();
+            const expenses = getExpenses();
+            const carExpenses = expenses.filter(x => x.carNum === carNum);
 
-        function renderExpensesTable() {
-            const carNum = document.getElementById('cardVehicleSelect').value;
-            const expenses = getExpenses().filter(x => x.carNum === carNum);
-            const tbody = document.getElementById('expenseTableBody');
-            const cars = getCars();
             const currentCar = cars.find(c => c.num === carNum) || {};
-            
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            let runningTotal = 0;
-            if (!carNum || expenses.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" class="text-center py-6 text-slate-400">لا توجد مصاريف مسجلة لهذه السيارة</td></tr>';
-                document.getElementById('cardTotalExpensesDisplay').innerText = 'إجمالي المصاريف: 0.00';
-                return;
-            }
-            expenses.forEach((item, index) => {
-                runningTotal += item.amount;
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-700/40">
-                        <td class="p-3 font-mono text-sky-400 font-bold">${index + 1}</td>
-                        <td class="p-3 font-mono">${item.date || '-'}</td>
-                        <td class="p-3 text-sky-300 font-bold">${item.customUser || currentCar.name || '-'}</td>
-                        <td class="p-3 font-mono">${item.customPhone || currentCar.phone || '-'}</td>
-                        <td class="p-3">${item.customWorkplace || currentCar.workplace || '-'}</td>
-                        <td class="p-3">${item.customRg || currentCar.rg || '-'}</td>
-                        <td class="p-3">${item.desc}</td>
-                        <td class="p-3 font-bold text-orange-400 font-mono">${item.amount.toLocaleString()}</td>
-                        <td class="p-3 font-bold text-sky-400 font-mono">${runningTotal.toLocaleString()}</td>
-                        <td class="no-print p-3 text-center"><button onclick="deleteSingleExpense(${item.id})" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button></td>
-                    </tr>
-                `;
-            });
-            document.getElementById('cardTotalExpensesDisplay').innerText = `إجمالي المصاريف: ${runningTotal.toLocaleString()}`;
-        }
+            const codedCar = coded.find(c => c.num === carNum) || {};
+            const latestExp = carExpenses.length > 0 ? carExpenses[carExpenses.length - 1] : {};
 
-        function saveToHistoryExpenses(expItem) {
-            const amount = Number(expItem.amount) || 0;
-            if (amount <= 0) return;
+            document.getElementById('cardCarTypeDisplay').innerText = currentCar.type || codedCar.type || latestExp.carType || '-';
+            document.getElementById('cardCarModelDisplay').innerText = currentCar.model || codedCar.model || latestExp.carModel || '-';
+            document.getElementById('cardCarRgDisplay').innerText = currentCar.rg || latestExp.customRg || '-';
+            document.getElementById('cardCarExpiryDisplay').innerText = getCodingDateForCar(carNum) || currentCar.expiryDate || '-';
+            document.getElementById('cardCarUserDisplay').innerText = currentCar.name || latestExp.customUser || '-';
+            document.getElementById('cardCarPhoneDisplay').innerText = currentCar.phone || latestExp.customPhone || '-';
+            document.getElementById('cardCarWorkplaceDisplay').innerText = currentCar.workplace || latestExp.customWorkplace || '-';
 
-            let historyList = historyExpensesCache || [];
-            historyList.push(expItem);
-            historyExpensesCache = historyList;
-            if (window.cloudDb) {
-                window.cloudSet(window.cloudRef(window.cloudDb, 'historyExpenses'), historyList);
-            }
+            renderExpensesTable();
         }
 
         function saveExpenseCard() {
             if (!checkGlobalPermission('add')) return;
             const carNum = document.getElementById('cardVehicleSelect').value;
+            const amount = parseFloat(document.getElementById('expAmount').value);
             const desc = document.getElementById('expDesc').value.trim();
-            const amount = parseFloat(document.getElementById('expAmount').value) || 0;
-            if (!carNum || amount <= 0 || !desc) {
-                customAlert('تنبيه', 'يرجى اختيار السيارة وإدخال بيان ومبلغ صحيح أكبر من صفر', 'warning');
+            const date = document.getElementById('expDate').value || new Date().toISOString().split('T')[0];
+
+            if (!carNum) {
+                customAlert('تنبيه', 'يرجى اختيار رقم السيارة أولاً', 'warning');
+                return;
+            }
+            if (!amount || amount <= 0) {
+                customAlert('تنبيه', 'يرجى إدخال قيمة مبلغ صالحة أكبر من الصفر', 'warning');
                 return;
             }
 
             const cars = getCars();
-            const carObj = cars.find(c => c.num === carNum) || {};
-            const codedObj = codedCarsCache.find(c => c.num === carNum) || {};
-            const carTypeVal = carObj.type || codedObj.type || '';
-            const carModelVal = carObj.model || codedObj.model || '';
+            const coded = getCodedCars();
+            const currentCar = cars.find(c => c.num === carNum) || {};
+            const codedCar = coded.find(c => c.num === carNum) || {};
 
-            const expItem = {
+            const newExpObj = {
                 id: Date.now(),
                 carNum: carNum,
-                date: document.getElementById('expDate').value || new Date().toISOString().split('T')[0],
-                desc: desc,
+                date: date,
+                desc: desc || "مصروفات / صيانة",
                 amount: amount,
-                customUser: carObj.name || '',
-                customPhone: carObj.phone || '',
-                customWorkplace: carObj.workplace || '',
-                customRg: carObj.rg || '',
-                carType: carTypeVal,
-                carModel: carModelVal
+                customUser: currentCar.name || '',
+                customPhone: currentCar.phone || '',
+                customWorkplace: currentCar.workplace || '',
+                customRg: currentCar.rg || '',
+                carType: currentCar.type || codedCar.type || '',
+                carModel: currentCar.model || codedCar.model || ''
             };
 
-            let expenses = getExpenses();
-            expenses.push(expItem);
-            saveExpenses(expenses);
-            saveToHistoryExpenses(expItem);
+            let list = getExpenses();
+            list.push(newExpObj);
+            saveExpenses(list);
 
-            document.getElementById('cardExpenseForm').reset();
-            customAlert('نجاح', 'تم تسجيل المصروف وحفظه في الأرشيف الدائم بنجاح!', 'success');
+            let histList = getHistoryExpenses();
+            histList.push({ ...newExpObj });
+            saveHistoryExpenses(histList);
+
+            logUserActivity('إدخال بيانات', 'كروت المصاريف', `إضافة مصروف للسيارة ${carNum}: مبلغ ${amount} (${newExpObj.desc})`);
+
+            document.getElementById('expDesc').value = '';
+            document.getElementById('expAmount').value = '';
+            customAlert('نجاح !', 'تم تسجيل حركة المصاريف في الكارت والجدول المالي والأرشيف المستقل!', 'success');
+        }
+
+        function confirmDeleteExpenseCard() {
+            if (!checkGlobalPermission('del')) return;
+            const carNum = document.getElementById('cardVehicleSelect').value;
+            if (!carNum) {
+                customAlert('تنبيه', 'اختر سيارة أولاً لحذف سجل مصاريفها', 'warning');
+                return;
+            }
+            showConfirmDialog(`هل أنت متأكد من حذف جميع مصاريف الكارت الخاصة بالسيارة رقم (${carNum})؟ (ملاحظة: سجل الحركات المالية السابقة في الأرشيف مستقل ولن يتأثر)`, function() {
+                let list = getExpenses().filter(x => x.carNum !== carNum);
+                logUserActivity('حذف', 'كروت المصاريف', `حذف مصاريف كارت السيارة رقم: ${carNum}`);
+                saveExpenses(list);
+                customAlert('نجاح', 'تم حذف مصاريف الكارت بنجاح (مع بقاء الأرشيف المالي المستقل كما هو)!', 'success');
+            }, 'تأكيد الحذف', '<i class="fa-solid fa-triangle-exclamation"></i>');
+        }
+
+        function renderExpensesTable() {
+            const carNum = document.getElementById('cardVehicleSelect').value;
+            const expenses = getExpenses().filter(x => x.carNum === carNum);
+            const cars = getCars();
+            const currentCar = cars.find(c => c.num === carNum) || {};
+            const tbody = document.getElementById('expenseTableBody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            if (!carNum) {
+                tbody.innerHTML = '<tr><td colspan="10" class="text-center py-6 text-slate-400">يرجى اختيار سيارة لعرض كارت المصاريف الخاص بها</td></tr>';
+                document.getElementById('cardTotalExpensesDisplay').innerText = "إجمالي المصاريف: 0.00";
+                return;
+            }
+            if (expenses.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" class="text-center py-6 text-slate-400">لا توجد مصاريف مسجلة لهذه السيارة حتى الآن</td></tr>';
+                document.getElementById('cardTotalExpensesDisplay').innerText = "إجمالي المصاريف: 0.00";
+                return;
+            }
+
+            let cumulative = 0;
+            expenses.forEach((exp, idx) => {
+                const amt = Number(exp.amount) || 0;
+                cumulative += amt;
+                const dUser = exp.customUser || currentCar.name || '-';
+                const dPhone = exp.customPhone || currentCar.phone || '-';
+                const dWork = exp.customWorkplace || currentCar.workplace || '-';
+                const dRg = exp.customRg || currentCar.rg || '-';
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-700/40">
+                        <td class="p-3 font-mono">${idx + 1}</td>
+                        <td class="p-3 font-mono">${exp.date || '-'}</td>
+                        <td class="p-3">${dUser}</td>
+                        <td class="p-3 font-mono">${dPhone}</td>
+                        <td class="p-3">${dWork}</td>
+                        <td class="p-3">${dRg}</td>
+                        <td class="p-3">${exp.desc || '-'}</td>
+                        <td class="p-3 font-mono font-bold text-orange-400">${amt.toLocaleString()}</td>
+                        <td class="p-3 font-mono font-bold text-sky-400">${cumulative.toLocaleString()}</td>
+                        <td class="no-print p-3 text-center">
+                            <button onclick="deleteSingleExpense(${exp.id})" class="px-2 py-1 bg-red-600/30 text-red-300 rounded text-[11px] hover:bg-red-600">حذف</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            document.getElementById('cardTotalExpensesDisplay').innerText = `إجمالي المصاريف: ${cumulative.toLocaleString()} جنيه/د.ك`;
         }
 
         function deleteSingleExpense(id) {
             if (!checkGlobalPermission('del')) return;
-            showConfirmDialog("هل أنت متأكد من حذف هذا البند؟ (سيبقى البند محفوظاً في الأرشيف المستقل للحركات السابقة ولن يتم حذفه أو تأثره)", function() {
-                let expenses = getExpenses().filter(x => x.id !== id);
-                saveExpenses(expenses);
-            }, 'تأكيد الحذف');
+            showConfirmDialog("هل أنت متأكد من حذف هذه الحركة المالية من الكارت الحالي؟ (سجل الحركات المالية السابقة المستقل سيظل محفوظاً دون حذف)", function() {
+                const target = getExpenses().find(x => x.id === id);
+                let list = getExpenses().filter(x => x.id !== id);
+                if (target) {
+                    logUserActivity('حذف', 'كروت المصاريف', `حذف حركة مصروف للسيارة ${target.carNum}: مبلغ ${target.amount} (${target.desc || '-'})`);
+                }
+                saveExpenses(list);
+                customAlert('نجاح', 'تم حذف الحركة من الكارت بنجاح', 'success');
+            }, 'تأكيد الحذف', '<i class="fa-solid fa-triangle-exclamation"></i>');
         }
 
         function renderFinancialTable() {
             const expenses = getExpenses();
+            const cars = getCars();
+            const todayStr = new Date().toISOString().split('T')[0];
+
+            const todayPositiveExpenses = expenses.filter(e => e.date === todayStr && (Number(e.amount) || 0) > 0);
             const tbody = document.getElementById('financialTableBody');
             if(!tbody) return;
             tbody.innerHTML = '';
-            
-            const todayStr = new Date().toISOString().split('T')[0];
-            const cars = getCars();
-
-            let sumOfAllAccumulatedTotals = 0;
-            (historyExpensesCache || []).forEach(e => {
-                const amt = Number(e.amount) || 0;
-                if (amt > 0) {
-                    sumOfAllAccumulatedTotals += amt;
-                }
-            });
-
-            const carAccumulatedTotalsMap = {};
-            (historyExpensesCache || []).forEach(e => {
-                const amt = Number(e.amount) || 0;
-                if (amt > 0) {
-                    if (!carAccumulatedTotalsMap[e.carNum]) {
-                        carAccumulatedTotalsMap[e.carNum] = 0;
-                    }
-                    carAccumulatedTotalsMap[e.carNum] += amt;
-                }
-            });
-
-            const todayPositiveExpenses = expenses.filter(e => e.date === todayStr && (Number(e.amount) || 0) > 0);
 
             let dailyTotalSum = 0;
             todayPositiveExpenses.forEach(e => {
                 dailyTotalSum += Number(e.amount) || 0;
             });
 
-            document.getElementById('financialDailyTotalDisplay').innerText = dailyTotalSum.toLocaleString();
-            document.getElementById('financialGrandTotalDisplay').innerText = sumOfAllAccumulatedTotals.toLocaleString();
+            let sumOfAllAccumulatedTotals = 0;
+            (historyExpensesCache || []).forEach(e => {
+                const amt = Number(e.amount) || 0;
+                if (amt > 0) sumOfAllAccumulatedTotals += amt;
+            });
+
+            document.getElementById('financialDailyTotalDisplay').innerText = dailyTotalSum.toLocaleString('en-US', { minimumFractionDigits: 2 });
+            document.getElementById('financialGrandTotalDisplay').innerText = sumOfAllAccumulatedTotals.toLocaleString('en-US', { minimumFractionDigits: 2 });
 
             if (todayPositiveExpenses.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="9" class="text-center py-6 text-slate-400">لا توجد حركات مالية مسجلة خلال اليوم بقيم أكبر من صفر</td></tr>';
                 return;
             }
 
+            const carAccumulatedTotalsMap = {};
+            (historyExpensesCache || []).forEach(e => {
+                const amt = Number(e.amount) || 0;
+                if (amt > 0) {
+                    if (!carAccumulatedTotalsMap[e.carNum]) carAccumulatedTotalsMap[e.carNum] = 0;
+                    carAccumulatedTotalsMap[e.carNum] += amt;
+                }
+            });
+
             todayPositiveExpenses.forEach((exp, idx) => {
                 const c = cars.find(item => item.num === exp.carNum) || {};
                 const displayType = exp.carType || c.type || '-';
                 const displayModel = exp.carModel || c.model || '-';
-                const carAccumulated = carAccumulatedTotalsMap[exp.carNum] || exp.amount;
+                const carAccumulated = carAccumulatedTotalsMap[exp.carNum] || (Number(exp.amount) || 0);
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-700/40">
-                        <td class="p-3 font-mono text-sky-400 font-bold">${idx + 1}</td>
+                        <td class="p-3 font-mono text-emerald-400 font-bold">${idx + 1}</td>
                         <td class="p-3 font-mono">${exp.date || '-'}</td>
                         <td class="p-3 font-bold text-white">${exp.carNum}</td>
                         <td class="p-3">${displayType}</td>
                         <td class="p-3 text-sky-300">${displayModel}</td>
                         <td class="p-3">${exp.customUser || c.name || '-'}</td>
                         <td class="p-3">${exp.desc || '-'}</td>
-                        <td class="p-3 font-bold text-emerald-400 font-mono">${exp.amount.toLocaleString()}</td>
-                        <td class="p-3 font-bold text-sky-400 font-mono">${carAccumulated.toLocaleString()}</td>
+                        <td class="p-3 font-mono font-bold text-emerald-400">${(Number(exp.amount) || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+                        <td class="p-3 font-mono font-bold text-sky-400">${carAccumulated.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
                     </tr>
                 `;
-            });
-        }
-
-        function getFilteredHistoryExpenses() {
-            const dateFrom = document.getElementById('historyDateFrom').value;
-            const dateTo = document.getElementById('historyDateTo').value;
-            
-            return (historyExpensesCache || []).filter(e => {
-                const amt = Number(e.amount) || 0;
-                if (amt <= 0) return false;
-                if (dateFrom && e.date && e.date < dateFrom) return false;
-                if (dateTo && e.date && e.date > dateTo) return false;
-                return true;
             });
         }
 
@@ -4047,58 +4433,75 @@ const firebaseConfig = {
             renderHistoryFinancialTable();
         }
 
+        function getFilteredHistoryExpenses() {
+            const historyList = (getHistoryExpenses() || []).filter(e => (Number(e.amount) || 0) > 0);
+            const fromDate = document.getElementById('historyDateFrom') ? document.getElementById('historyDateFrom').value : '';
+            const toDate = document.getElementById('historyDateTo') ? document.getElementById('historyDateTo').value : '';
+
+            return historyList.filter(item => {
+                if (fromDate && item.date && item.date < fromDate) return false;
+                if (toDate && item.date && item.date > toDate) return false;
+                return true;
+            });
+        }
+
         function renderHistoryFinancialTable() {
-            const tbody = document.getElementById('historyFinancialTableBody');
-            if (!tbody) return;
-
-            const filteredHistory = getFilteredHistoryExpenses();
+            const allPositiveHistory = (getHistoryExpenses() || []).filter(e => (Number(e.amount) || 0) > 0);
+            const filtered = getFilteredHistoryExpenses();
             const cars = getCars();
+            const tbody = document.getElementById('historyFinancialTableBody');
+            if(!tbody) return;
+            tbody.innerHTML = '';
 
-            let historyGrandTotal = 0;
-            (historyExpensesCache || []).forEach(e => {
-                const amt = Number(e.amount) || 0;
-                if (amt > 0) historyGrandTotal += amt;
+            let grandTotalSum = 0;
+            allPositiveHistory.forEach(e => {
+                grandTotalSum += Number(e.amount) || 0;
             });
 
-            let filteredSum = 0;
-            filteredHistory.forEach(e => filteredSum += (Number(e.amount) || 0));
+            let filteredTotalSum = 0;
+            filtered.forEach(e => {
+                filteredTotalSum += Number(e.amount) || 0;
+            });
 
-            document.getElementById('historyFilteredCountDisplay').innerText = filteredHistory.length;
-            document.getElementById('historyFilteredTotalDisplay').innerText = filteredSum.toLocaleString();
-            document.getElementById('historyGrandTotalDisplay').innerText = historyGrandTotal.toLocaleString();
+            if (document.getElementById('historyFilteredCountDisplay')) {
+                document.getElementById('historyFilteredCountDisplay').innerText = filtered.length;
+            }
+            if (document.getElementById('historyFilteredTotalDisplay')) {
+                document.getElementById('historyFilteredTotalDisplay').innerText = filteredTotalSum.toLocaleString('en-US', { minimumFractionDigits: 2 });
+            }
+            if (document.getElementById('historyGrandTotalDisplay')) {
+                document.getElementById('historyGrandTotalDisplay').innerText = grandTotalSum.toLocaleString('en-US', { minimumFractionDigits: 2 });
+            }
 
-            tbody.innerHTML = '';
-            if (filteredHistory.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9" class="text-center py-6 text-slate-400">لا توجد حركات مالية مطابقة للفلاتر التاريخية المحددة</td></tr>';
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" class="text-center py-6 text-slate-400">لا توجد حركات مالية مطابقة للفلترة في الأرشيف المستقل</td></tr>';
                 return;
             }
 
             const carAccumulatedTotalsMap = {};
-            (historyExpensesCache || []).forEach(e => {
+            allPositiveHistory.forEach(e => {
                 const amt = Number(e.amount) || 0;
-                if (amt > 0) {
-                    if (!carAccumulatedTotalsMap[e.carNum]) carAccumulatedTotalsMap[e.carNum] = 0;
-                    carAccumulatedTotalsMap[e.carNum] += amt;
-                }
+                if (!carAccumulatedTotalsMap[e.carNum]) carAccumulatedTotalsMap[e.carNum] = 0;
+                carAccumulatedTotalsMap[e.carNum] += amt;
             });
 
-            filteredHistory.forEach((exp, idx) => {
+            filtered.forEach((exp, idx) => {
                 const c = cars.find(item => item.num === exp.carNum) || {};
                 const displayType = exp.carType || c.type || '-';
                 const displayModel = exp.carModel || c.model || '-';
-                const carAccumulated = carAccumulatedTotalsMap[exp.carNum] || exp.amount;
+                const carAccumulated = carAccumulatedTotalsMap[exp.carNum] || (Number(exp.amount) || 0);
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-700/40">
                         <td class="p-3 font-mono text-cyan-400 font-bold">${idx + 1}</td>
-                        <td class="p-3 font-mono text-cyan-300 font-bold">${exp.date || '-'}</td>
+                        <td class="p-3 font-mono text-cyan-300 font-semibold">${exp.date || '-'}</td>
                         <td class="p-3 font-bold text-white">${exp.carNum}</td>
                         <td class="p-3">${displayType}</td>
                         <td class="p-3 text-sky-300">${displayModel}</td>
                         <td class="p-3">${exp.customUser || c.name || '-'}</td>
                         <td class="p-3">${exp.desc || '-'}</td>
-                        <td class="p-3 font-bold text-emerald-400 font-mono">${exp.amount.toLocaleString()}</td>
-                        <td class="p-3 font-bold text-sky-400 font-mono">${carAccumulated.toLocaleString()}</td>
+                        <td class="p-3 font-mono font-bold text-emerald-400">${(Number(exp.amount) || 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+                        <td class="p-3 font-mono font-bold text-sky-400">${carAccumulated.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
                     </tr>
                 `;
             });
@@ -4108,91 +4511,157 @@ const firebaseConfig = {
             if (!checkGlobalPermission('export')) return;
             const filtered = getFilteredHistoryExpenses();
             if (filtered.length === 0) {
-                customAlert('تنبيه', 'لا توجد حركات مالية مطابقة للتصدير!', 'warning');
+                customAlert('تنبيه', 'لا توجد حركات مطابقة في سجل الحركات المالية السابقة للتصدير!', 'warning');
                 return;
             }
+            logUserActivity('تصدير', 'سجل الحركات المالية السابقة', `تصدير Excel لسجل الحركات السابقة (عدد الحركات: ${filtered.length})`);
+
+            const allPositiveHistory = (getHistoryExpenses() || []).filter(e => (Number(e.amount) || 0) > 0);
+            const grandTotalSum = allPositiveHistory.reduce((acc, e) => acc + (Number(e.amount) || 0), 0);
+            const periodTotalSum = filtered.reduce((acc, e) => acc + (Number(e.amount) || 0), 0);
+
             const cars = getCars();
+            const fromDate = document.getElementById('historyDateFrom').value || 'البداية';
+            const toDate = document.getElementById('historyDateTo').value || 'النهاية';
+
             const carAccumulatedTotalsMap = {};
-            (historyExpensesCache || []).forEach(e => {
+            allPositiveHistory.forEach(e => {
                 const amt = Number(e.amount) || 0;
-                if (amt > 0) {
-                    if (!carAccumulatedTotalsMap[e.carNum]) carAccumulatedTotalsMap[e.carNum] = 0;
-                    carAccumulatedTotalsMap[e.carNum] += amt;
-                }
+                if (!carAccumulatedTotalsMap[e.carNum]) carAccumulatedTotalsMap[e.carNum] = 0;
+                carAccumulatedTotalsMap[e.carNum] += amt;
             });
 
-            const dataToExport = filtered.map((e, idx) => {
-                const c = cars.find(item => item.num === e.carNum) || {};
+            const rows = filtered.map((exp, idx) => {
+                const c = cars.find(item => item.num === exp.carNum) || {};
+                const carAccumulated = carAccumulatedTotalsMap[exp.carNum] || (Number(exp.amount) || 0);
                 return {
                     "م": idx + 1,
-                    "تاريخ الحركة": e.date || '',
-                    "رقم السيارة": e.carNum,
-                    "نوع السيارة": e.carType || c.type || '',
-                    "الموديل": e.carModel || c.model || '',
-                    "اسم المستلم": e.customUser || c.name || '',
-                    "بيان الحركة": e.desc || '',
-                    "مبلغ الحركة": e.amount,
-                    "التراكمي الكلي للسيارة": carAccumulatedTotalsMap[e.carNum] || e.amount
+                    "تاريخ الحركة": exp.date || '',
+                    "رقم السيارة": exp.carNum,
+                    "نوع السيارة": exp.carType || c.type || '',
+                    "الموديل": exp.carModel || c.model || '',
+                    "اسم المستلم": exp.customUser || c.name || '',
+                    "بيان الحركة": exp.desc || '',
+                    "مبلغ الحركة": Number(exp.amount) || 0,
+                    "إجمالي السيارة التراكمي": carAccumulated
                 };
             });
-            const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+
+            rows.push({
+                "م": "ملخص الفترة",
+                "تاريخ الحركة": `من: ${fromDate}`,
+                "رقم السيارة": `إلى: ${toDate}`,
+                "نوع السيارة": "",
+                "الموديل": "",
+                "اسم المستلم": "",
+                "بيان الحركة": "عدد الحركات",
+                "مبلغ الحركة": filtered.length,
+                "إجمالي السيارة التراكمي": ""
+            });
+
+            rows.push({
+                "م": "مبلغ الفترة",
+                "تاريخ الحركة": "",
+                "رقم السيارة": "",
+                "نوع السيارة": "",
+                "الموديل": "",
+                "اسم المستلم": "",
+                "بيان الحركة": "مبلغ الفترة",
+                "مبلغ الحركة": periodTotalSum,
+                "إجمالي السيارة التراكمي": ""
+            });
+
+            rows.push({
+                "م": "الإجمالي العام",
+                "تاريخ الحركة": "",
+                "رقم السيارة": "",
+                "نوع السيارة": "",
+                "الموديل": "",
+                "اسم المستلم": "",
+                "بيان الحركة": "الإجمالي العام للحركات",
+                "مبلغ الحركة": grandTotalSum,
+                "إجمالي السيارة التراكمي": grandTotalSum
+            });
+
+            const worksheet = XLSX.utils.json_to_sheet(rows);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "سجل الحركات المالية السابقة");
-            XLSX.writeFile(workbook, "History_Financial_Movements.xlsx");
+            XLSX.utils.book_append_sheet(workbook, worksheet, "سجل الحركات السابقة");
+            XLSX.writeFile(workbook, `History_Financial_Movements_${fromDate}_to_${toDate}.xlsx`);
         }
 
         function printHistoryFinancialPDF() {
             if (!checkGlobalPermission('export')) return;
             const filtered = getFilteredHistoryExpenses();
             if (filtered.length === 0) {
-                customAlert('تنبيه', 'لا توجد حركات مالية مطابقة للطباعة!', 'warning');
+                customAlert('تنبيه', 'لا توجد حركات مطابقة في سجل الحركات المالية السابقة للطباعة!', 'warning');
                 return;
             }
-            const dateFrom = document.getElementById('historyDateFrom').value || 'البداية';
-            const dateTo = document.getElementById('historyDateTo').value || 'النهاية';
+            logUserActivity('تصدير', 'سجل الحركات المالية السابقة', `طباعة PDF لسجل الحركات السابقة (عدد الحركات: ${filtered.length})`);
+
+            const allPositiveHistory = (getHistoryExpenses() || []).filter(e => (Number(e.amount) || 0) > 0);
+            const grandTotalSum = allPositiveHistory.reduce((acc, e) => acc + (Number(e.amount) || 0), 0);
+            const periodTotalSum = filtered.reduce((acc, e) => acc + (Number(e.amount) || 0), 0);
+
             const cars = getCars();
+            const fromDate = document.getElementById('historyDateFrom').value || 'البداية';
+            const toDate = document.getElementById('historyDateTo').value || 'النهاية';
+
             const carAccumulatedTotalsMap = {};
-            (historyExpensesCache || []).forEach(e => {
+            allPositiveHistory.forEach(e => {
                 const amt = Number(e.amount) || 0;
-                if (amt > 0) {
-                    if (!carAccumulatedTotalsMap[e.carNum]) carAccumulatedTotalsMap[e.carNum] = 0;
-                    carAccumulatedTotalsMap[e.carNum] += amt;
-                }
+                if (!carAccumulatedTotalsMap[e.carNum]) carAccumulatedTotalsMap[e.carNum] = 0;
+                carAccumulatedTotalsMap[e.carNum] += amt;
             });
 
             let printWin = window.open('', '_blank');
             let htmlContent = `
                 <html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير سجل الحركات المالية السابقة</title>
                 <style>
-                    @page { size: A4 landscape; margin: 6mm 5mm 14mm 5mm; }
+                    @page { size: A4 landscape; margin: 7mm 6mm 16mm 6mm; }
                     body { font-family: 'Cairo', sans-serif; color: #1e293b; background: #fff; margin: 0; padding: 0; overflow: hidden; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 8.5px; table-layout: fixed; }
-                    th, td { border: 1px solid #cbd5e1; padding: 3px; text-align: right; word-wrap: break-word; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 4px; font-size: 9.5px; table-layout: fixed; }
+                    th, td { border: 1px solid #cbd5e1; padding: 3.5px 4px; text-align: right; word-wrap: break-word; line-height: 1.25; }
                     th { background-color: #0891b2 !important; color: #fff !important; -webkit-print-color-adjust: exact; }
                     .print-footer-box {
                         position: fixed; bottom: 0; left: 0; right: 0; width: 100%;
-                        background: #ffffff; font-size: 8px; font-family: 'Cairo', monospace;
+                        background: #ffffff; font-size: 10px; font-weight: bold; font-family: 'Cairo', monospace;
                         display: flex; justify-content: space-between; align-items: center;
-                        color: #334155; padding: 3px 5mm; border-top: 1.5px solid #0284c7;
+                        color: #0f172a; padding: 4px 6mm; border-top: 2px solid #0284c7;
                         -webkit-print-color-adjust: exact;
                     }
                     .pageNumber:before { content: counter(page); }
                     .totalPages:before { content: counter(pages); }
                 </style></head>
                 <body>
-                    ${getPrintHeaderFooterHTML(`سجل الحركات المالية السابقة (من: ${dateFrom} إلى: ${dateTo})`)}
+                    ${getPrintHeaderFooterHTML(`سجل الحركات المالية السابقة (الفترة من: ${fromDate} إلى: ${toDate})`)}
                     <table>
-                        <thead><tr><th style="width: 4%;">#</th><th style="width: 12%;">التاريخ</th><th style="width: 12%;">رقم السيارة</th><th style="width: 11%;">النوع</th><th style="width: 11%;">الموديل</th><th style="width: 14%;">المستلم</th><th style="width: 16%;">بيان الحركة</th><th style="width: 10%;">المبلغ</th><th style="width: 10%;">التراكمي للسيارة</th></tr></thead>
+                        <thead><tr><th style="width: 4%;">#</th><th style="width: 12%;">تاريخ الحركة</th><th style="width: 12%;">رقم السيارة</th><th style="width: 11%;">النوع</th><th style="width: 11%;">الموديل</th><th style="width: 14%;">المستلم</th><th style="width: 16%;">بيان الحركة</th><th style="width: 10%;">مبلغ الحركة</th><th style="width: 10%;">التراكمي للسيارة</th></tr></thead>
                         <tbody>
             `;
             filtered.forEach((exp, idx) => {
                 const c = cars.find(item => item.num === exp.carNum) || {};
                 const displayType = exp.carType || c.type || '-';
                 const displayModel = exp.carModel || c.model || '-';
-                const carAccumulated = carAccumulatedTotalsMap[exp.carNum] || exp.amount;
-                htmlContent += `<tr><td>${idx+1}</td><td>${exp.date||'-'}</td><td><b>${exp.carNum}</b></td><td>${displayType}</td><td>${displayModel}</td><td>${exp.customUser||c.name||'-'}</td><td>${exp.desc||'-'}</td><td>${exp.amount.toLocaleString()}</td><td>${carAccumulated.toLocaleString()}</td></tr>`;
+                const carAccumulated = carAccumulatedTotalsMap[exp.carNum] || (Number(exp.amount) || 0);
+                htmlContent += `<tr><td>${idx+1}</td><td>${exp.date||'-'}</td><td><b>${exp.carNum}</b></td><td>${displayType}</td><td>${displayModel}</td><td>${exp.customUser||c.name||'-'}</td><td>${exp.desc||'-'}</td><td>${(Number(exp.amount)||0).toLocaleString()}</td><td>${carAccumulated.toLocaleString()}</td></tr>`;
             });
-            htmlContent += `</tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
+            htmlContent += `
+                        <tr style="background:#f0f9ff;font-weight:bold;">
+                            <td colspan="7">عدد الحركات</td>
+                            <td>${filtered.length} حركة</td>
+                            <td></td>
+                        </tr>
+                        <tr style="background:#ecfdf5;font-weight:bold;">
+                            <td colspan="7">مبلغ الفترة</td>
+                            <td>${periodTotalSum.toLocaleString()}</td>
+                            <td></td>
+                        </tr>
+                        <tr style="background:#e0f2fe;font-weight:bold;">
+                            <td colspan="7">الإجمالي العام للحركات</td>
+                            <td>${grandTotalSum.toLocaleString()}</td>
+                            <td>${grandTotalSum.toLocaleString()}</td>
+                        </tr>
+                    </tbody></table><script>window.onload=function(){window.print();window.close();}<\/script></body></html>`;
             printWin.document.write(htmlContent);
             printWin.document.close();
         }
